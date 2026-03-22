@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Virtual Match Analyzer</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #0f172a; color: white; }
+    button { padding: 10px; margin-top: 10px; }
+    #output { margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<h2>📸 Virtual Screenshot Analyzer</h2>
+
+<input type="file" id="imageInput" />
+<button onclick="analyze()">Analyze</button>
+
+<div id="output"></div>
+
+<script>
+function analyze() {
+  const file = document.getElementById("imageInput").files[0];
+  if (!file) return alert("Upload screenshot first");
+
+  document.getElementById("output").innerText = "Reading image...";
+
+  Tesseract.recognize(file, 'eng')
+    .then(({ data: { text } }) => {
+      processText(text);
+    });
+}
+
+function processText(text) {
+  let lines = text.split("\n").filter(l => l.includes("-"));
+
+  let results = [];
+
+  lines.forEach(line => {
+    let scores = line.match(/\d-\d/g);
+    if (!scores) return;
+
+    let overCount = 0;
+
+    scores.forEach(score => {
+      let [a, b] = score.split("-").map(Number);
+      if (a + b >= 2) overCount++;
+    });
+
+    results.push({ line, score: overCount });
+  });
+
+  results.sort((a, b) => b.score - a.score);
+
+  let output = "<h3>🔥 Top Picks:</h3>";
+
+  results.slice(0, 3).forEach(r => {
+    output += `<p>✅ ${r.line} (Score: ${r.score})</p>`;
+  });
+
+  document.getElementById("output").innerHTML = output;
+}
+</script>
+
+</body>
+</html>
