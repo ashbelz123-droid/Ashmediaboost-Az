@@ -13,20 +13,21 @@ button { padding:10px; margin:5px; font-size:16px; }
 
 <h1>🚗 Streets of Uganda</h1>
 <button onclick="startGame()">▶️ Tandika</button>
-<h3>💰 Coins: <span id="coins">0</span></h3>
+<button onclick="nitro()">⚡ Nitro</button>
+
+<h3>💰 Coins: <span id="coins">0</span> | 🏁 Score: <span id="score">0</span></h3>
 
 <canvas id="game" width="400" height="600"></canvas>
-
-<h2>Dduuka ly’abavuganyi</h2>
-<div id="shop"></div>
 
 <script>
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
 let gameRunning = false;
-let speed = 3;
+let baseSpeed = 3;
+let speed = baseSpeed;
 let coins = 0;
+let score = 0;
 
 // 🎵 MUSIC
 const music = {
@@ -50,38 +51,53 @@ let player = { x:180, y:500, w:40, h:60 };
 // 🚧 OBSTACLES
 let obstacles = [];
 
-// 🌍 ROAD ANIMATION
+// 🌍 ROAD
 let roadOffset = 0;
 
-// 🛣️ DRAW ROAD
+// ⚡ NITRO
+function nitro(){
+  speed = 8;
+  setTimeout(()=>{ speed = baseSpeed; }, 2000);
+}
+
+// 🛣️ ROAD DRAW
 function drawRoad(){
   ctx.fillStyle = "#333";
   ctx.fillRect(0,0,400,600);
 
+  // lanes
   ctx.strokeStyle = "white";
-  ctx.lineWidth = 4;
+  ctx.lineWidth = 3;
   ctx.setLineDash([20,20]);
 
-  for(let i = -40; i < 600; i += 40){
-    ctx.beginPath();
-    ctx.moveTo(200, i + roadOffset);
-    ctx.lineTo(200, i + 20 + roadOffset);
-    ctx.stroke();
+  for(let x=100; x<=300; x+=100){
+    for(let i=-40; i<600; i+=40){
+      ctx.beginPath();
+      ctx.moveTo(x, i + roadOffset);
+      ctx.lineTo(x, i+20 + roadOffset);
+      ctx.stroke();
+    }
   }
 
   ctx.setLineDash([]);
 }
 
-// 🚗 DRAW PLAYER
+// 🚗 PLAYER DRAW
 function drawPlayer(){
+  // shadow
+  ctx.fillStyle = "rgba(0,0,0,0.5)";
+  ctx.fillRect(player.x+5, player.y+5, 40, 60);
+
+  // car
   ctx.fillStyle = "red";
   ctx.fillRect(player.x, player.y, 40, 60);
 
+  // glass
   ctx.fillStyle = "lightblue";
   ctx.fillRect(player.x+5, player.y+10, 30, 20);
 }
 
-// 🚧 DRAW OBSTACLES
+// 🚧 OBSTACLES
 function drawObstacle(o){
   if(o.type==="car") ctx.fillStyle="blue";
   else if(o.type==="taxi") ctx.fillStyle="yellow";
@@ -93,8 +109,8 @@ function drawObstacle(o){
 
 // 🎮 CONTROLS
 document.addEventListener("keydown", e=>{
-  if(e.key==="ArrowLeft") player.x-=20;
-  if(e.key==="ArrowRight") player.x+=20;
+  if(e.key==="ArrowLeft") player.x-=30;
+  if(e.key==="ArrowRight") player.x+=30;
 });
 
 // 📱 TOUCH
@@ -108,93 +124,10 @@ canvas.addEventListener("touchstart", e=>{
 function spawnObstacle(){
   let types = ["car","taxi","boda","tuktuk"];
   obstacles.push({
-    x: Math.random()*360,
+    x: [80,180,280][Math.floor(Math.random()*3)], // lanes
     y: -60,
     type: types[Math.floor(Math.random()*types.length)]
   });
-}
-
-// 🌍 ROADS
-let roads = ["Kampala","Entebbe Road","Entebbe Highway","Jinja","Mbale"];
-let currentRoad = 0;
-
-function changeRoad(){
-  currentRoad++;
-  if(currentRoad>=roads.length) currentRoad=0;
-
-  let r = roads[currentRoad];
-
-  if(r==="Entebbe Highway"){
-    speed = 7;
-    playMusic("night");
-    alert("⚡ Oli ku Entebbe Highway!");
-  }
-  else if(r==="Entebbe Road"){
-    speed = 5;
-    alert("📍 Oli ku luguudo lw’e Entebbe");
-  }
-  else if(r==="Kampala"){
-    speed = 3;
-    playMusic("chaos");
-  }
-  else if(r==="Jinja"){
-    speed = 4;
-  }
-  else if(r==="Mbale"){
-    speed = 5;
-  }
-}
-
-// 🧠 RACERS
-let racers = [
-  {name:"Omah",price:0,owned:true},
-  {name:"Emma",price:100,owned:false},
-  {name:"Ashbelz",price:200,owned:false},
-  {name:"KuniRanks",price:300,owned:false},
-  {name:"DND Bush",price:400,owned:false},
-  {name:"Oinam",price:500,owned:false},
-  {name:"KingKong",price:700,owned:false},
-  {name:"Geno",price:1000,owned:false}
-];
-
-function buyRacer(i){
-  let r = racers[i];
-
-  if(r.owned){
-    alert("Ono omulina dda!");
-    return;
-  }
-
-  if(coins>=r.price){
-    coins-=r.price;
-    r.owned=true;
-    alert("Oguze "+r.name+"!");
-    updateCoins();
-    renderShop();
-  } else {
-    alert("Obusente tebimala!");
-  }
-}
-
-function renderShop(){
-  let shop = document.getElementById("shop");
-  shop.innerHTML = "";
-
-  racers.forEach((r,i)=>{
-    let btn = document.createElement("button");
-
-    btn.innerText = r.owned 
-      ? r.name + " ✅" 
-      : r.name + " - " + r.price + "🪙";
-
-    btn.onclick = ()=>buyRacer(i);
-
-    shop.appendChild(btn);
-  });
-}
-
-function updateCoins(){
-  document.getElementById("coins").innerText = Math.floor(coins);
 }
 
 // 🚀 START
@@ -202,8 +135,7 @@ function startGame(){
   gameRunning = true;
   playMusic("racing");
   setInterval(gameLoop,20);
-  setInterval(spawnObstacle,1000);
-  setInterval(changeRoad,15000);
+  setInterval(spawnObstacle,800);
 }
 
 // 🎮 LOOP
@@ -212,7 +144,7 @@ function gameLoop(){
 
   ctx.clearRect(0,0,400,600);
 
-  // road animation
+  // speed effect
   roadOffset += speed;
   if(roadOffset > 40) roadOffset = 0;
 
@@ -229,14 +161,17 @@ function gameLoop(){
     }
   });
 
+  // score + coins
   coins += 0.05;
-  updateCoins();
+  score += 1;
 
+  document.getElementById("coins").innerText = Math.floor(coins);
+  document.getElementById("score").innerText = score;
+
+  // random music change
   if(Math.random()<0.002) playMusic("chaos");
   if(Math.random()<0.001) playMusic("night");
 }
-
-renderShop();
 </script>
 
 </body>
