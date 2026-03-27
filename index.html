@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="lg">
 <head>
 <meta charset="UTF-8">
-<title>Streets of Uganda</title>
-<style>
-body { margin:0; background:black; color:white; text-align:center; font-family:Arial; }
-canvas { background:#111; display:none; margin:auto; }
+<title>Streets of Uganda - Ghetto Run</title>
 
-#menu {
+<style>
+body { margin:0; background:black; color:white; font-family:Arial; text-align:center; overflow:hidden; }
+
+#menu, #characters {
   position:absolute;
   width:100%;
   height:100vh;
@@ -18,27 +18,52 @@ canvas { background:#111; display:none; margin:auto; }
   background:linear-gradient(black,#222);
 }
 
+canvas { display:none; background:#111; }
+
 button {
-  padding:15px;
+  padding:12px;
+  margin:8px;
   font-size:18px;
-  margin:10px;
   border-radius:10px;
+}
+
+#controls {
+  position:fixed;
+  bottom:10px;
+  width:100%;
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
+<!-- MENU -->
 <div id="menu">
   <h1>🏃 Streets of Uganda</h1>
-  <button onclick="startGame()">▶️ Tandika</button>
+  <button onclick="openCharacters()">▶️ Tandika</button>
 </div>
 
+<!-- CHARACTER SELECT -->
+<div id="characters" style="display:none;">
+  <h2>Londa Omuzannyi</h2>
+
+  <button onclick="selectCharacter(0)">Omah</button>
+  <button onclick="selectCharacter(1)">Emma</button>
+
+  <br><br>
+  <button onclick="startGame()">🚀 Start</button>
+</div>
+
+<!-- GAME -->
 <canvas id="game" width="400" height="600"></canvas>
 
-<div id="controls" style="display:none;">
+<!-- CONTROLS -->
+<div id="controls">
   <button onclick="moveLeft()">⬅️</button>
   <button onclick="moveRight()">➡️</button>
+  <button onclick="jump()">⬆️</button>
+  <button onclick="slide()">⬇️</button>
 </div>
 
 <script>
@@ -46,145 +71,198 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
 let running = false;
-let speed = 4;
-let score = 0;
 
-// 🎧 SOUND (NO FILES — GENERATED)
+// SOUND
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-function beep(freq, time){
-  let osc = audioCtx.createOscillator();
-  let gain = audioCtx.createGain();
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-
-  osc.frequency.value = freq;
-  osc.start();
-
-  gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + time);
-
-  osc.stop(audioCtx.currentTime + time);
+function beep(f,t){
+  let o=audioCtx.createOscillator();
+  let g=audioCtx.createGain();
+  o.connect(g); g.connect(audioCtx.destination);
+  o.frequency.value=f;
+  o.start();
+  g.gain.setValueAtTime(0.1,audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+t);
+  o.stop(audioCtx.currentTime+t);
 }
 
-// 🛣️ LANES
-let lanes = [80, 180, 280];
-let currentLane = 1;
+// LANES
+let lanes=[80,180,280];
+let currentLane=1;
 
-let player = { x: lanes[currentLane], y:500 };
+// PLAYER
+let player={x:lanes[currentLane],y:500};
+let isJumping=false, isSliding=false;
+let velocityY=0, gravity=0.6, groundY=500;
 
-// 🚧 OBSTACLES
-let obstacles = [];
+// CHARACTER SYSTEM
+let selectedCharacter=0;
+let characters=[
+{
+ name:"Omah",
+ frames:[
+"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='120'><circle cx='40' cy='25' r='15' fill='#f1c27d'/><rect x='30' y='40' width='20' height='40' fill='red'/><line x1='30' y1='80' x2='20' y2='110' stroke='black' stroke-width='5'/><line x1='50' y1='80' x2='60' y2='110' stroke='black' stroke-width='5'/></svg>",
+"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='120'><circle cx='40' cy='25' r='15' fill='#f1c27d'/><rect x='30' y='40' width='20' height='40' fill='red'/><line x1='30' y1='80' x2='40' y2='110' stroke='black' stroke-width='5'/><line x1='50' y1='80' x2='40' y2='110' stroke='black' stroke-width='5'/></svg>"
+]
+},
+{
+ name:"Emma",
+ frames:[
+"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='120'><circle cx='40' cy='25' r='15' fill='#f1c27d'/><rect x='30' y='40' width='20' height='40' fill='blue'/><line x1='30' y1='80' x2='20' y2='110' stroke='black' stroke-width='5'/><line x1='50' y1='80' x2='60' y2='110' stroke='black' stroke-width='5'/></svg>",
+"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='120'><circle cx='40' cy='25' r='15' fill='#f1c27d'/><rect x='30' y='40' width='20' height='40' fill='blue'/><line x1='30' y1='80' x2='40' y2='110' stroke='black' stroke-width='5'/><line x1='50' y1='80' x2='40' y2='110' stroke='black' stroke-width='5'/></svg>"
+]
+}
+];
 
-// 🎮 CONTROLS
-function moveLeft(){
-  if(currentLane > 0){
-    currentLane--;
-    beep(200,0.1);
-  }
+// LOAD FRAMES
+let playerFrames=[];
+function updateCharacter(){
+ playerFrames=[];
+ characters[selectedCharacter].frames.forEach(src=>{
+   let img=new Image();
+   img.src=src;
+   playerFrames.push(img);
+ });
 }
 
-function moveRight(){
-  if(currentLane < 2){
-    currentLane++;
-    beep(200,0.1);
-  }
+// SELECT
+function selectCharacter(i){
+ selectedCharacter=i;
+ updateCharacter();
+ alert("Olonze "+characters[i].name);
 }
 
-// 🚀 START
+// MENU
+function openCharacters(){
+ document.getElementById("menu").style.display="none";
+ document.getElementById("characters").style.display="block";
+}
+
+// CONTROLS
+function moveLeft(){ if(currentLane>0) currentLane--; }
+function moveRight(){ if(currentLane<2) currentLane++; }
+
+function jump(){
+ if(!isJumping && !isSliding){
+   isJumping=true;
+   velocityY=-12;
+   beep(400,0.1);
+ }
+}
+
+function slide(){
+ if(!isJumping){
+   isSliding=true;
+   beep(200,0.1);
+   setTimeout(()=>isSliding=false,800);
+ }
+}
+
+// START
 function startGame(){
-  document.getElementById("menu").style.display="none";
-  canvas.style.display="block";
-  document.getElementById("controls").style.display="block";
+ document.getElementById("characters").style.display="none";
+ canvas.style.display="block";
+ document.getElementById("controls").style.display="block";
 
-  running = true;
-  beep(500,0.2);
+ running=true;
+ updateCharacter();
 
-  setInterval(loop,20);
-  setInterval(spawn,900);
+ setInterval(loop,20);
+ setInterval(spawn,900);
 }
 
-// 🚧 SPAWN
+// OBSTACLES
+let obstacles=[];
 function spawn(){
-  let types = ["boda","taxi","drum"];
-  obstacles.push({
-    lane: Math.floor(Math.random()*3),
-    y: -60,
-    type: types[Math.floor(Math.random()*types.length)]
-  });
+ let types=["boda","taxi"];
+ obstacles.push({
+   lane:Math.floor(Math.random()*3),
+   y:-60,
+   type:types[Math.floor(Math.random()*types.length)]
+ });
 }
 
-// 🎨 DRAW ROAD
-let offset = 0;
+// ROAD
+let offset=0;
 function drawRoad(){
-  ctx.fillStyle="#222";
-  ctx.fillRect(0,0,400,600);
+ ctx.fillStyle="#222";
+ ctx.fillRect(0,0,400,600);
 
-  ctx.strokeStyle="white";
-  ctx.setLineDash([20,20]);
+ ctx.strokeStyle="white";
+ ctx.setLineDash([20,20]);
 
-  for(let x=100;x<=300;x+=100){
-    for(let i=-40;i<600;i+=40){
-      ctx.beginPath();
-      ctx.moveTo(x,i+offset);
-      ctx.lineTo(x,i+20+offset);
-      ctx.stroke();
-    }
+ for(let x=100;x<=300;x+=100){
+  for(let i=-40;i<600;i+=40){
+    ctx.beginPath();
+    ctx.moveTo(x,i+offset);
+    ctx.lineTo(x,i+20+offset);
+    ctx.stroke();
   }
+ }
 
-  ctx.setLineDash([]);
+ ctx.setLineDash([]);
 }
 
-// 🧍 PLAYER
+// ANIMATION
+let frameIndex=0, frameTimer=0;
+
+// PLAYER DRAW
 function drawPlayer(){
-  player.x += (lanes[currentLane]-player.x)*0.2;
+ player.x += (lanes[currentLane]-player.x)*0.2;
 
-  ctx.fillStyle="red";
-  ctx.fillRect(player.x, player.y, 40, 60);
+ if(isJumping){
+   player.y+=velocityY;
+   velocityY+=gravity;
+   if(player.y>=groundY){
+     player.y=groundY;
+     isJumping=false;
+   }
+ }
 
-  ctx.fillStyle="lightblue";
-  ctx.fillRect(player.x+5, player.y+10, 30, 20);
+ frameTimer++;
+ if(frameTimer>8){
+   frameIndex=(frameIndex+1)%playerFrames.length;
+   frameTimer=0;
+ }
+
+ let h=isSliding?40:80;
+
+ ctx.drawImage(playerFrames[frameIndex],player.x,player.y+(isSliding?40:0),50,h);
 }
 
-// 🚧 OBSTACLE DRAW
+// OBSTACLE DRAW
 function drawObstacle(o){
-  let x = lanes[o.lane];
+ let x=lanes[o.lane];
+ let scale=0.6+(o.y/600);
 
-  let scale = 0.5 + (o.y / 600);
-
-  if(o.type==="boda") ctx.fillStyle="green";
-  else if(o.type==="taxi") ctx.fillStyle="yellow";
-  else ctx.fillStyle="orange";
-
-  ctx.fillRect(x, o.y, 40*scale, 60*scale);
+ ctx.fillStyle=o.type==="boda"?"green":"yellow";
+ ctx.fillRect(x,o.y,40*scale,60*scale);
 }
 
-// 🎮 LOOP
+// LOOP
 function loop(){
-  if(!running) return;
+ if(!running) return;
 
-  ctx.clearRect(0,0,400,600);
+ ctx.clearRect(0,0,400,600);
 
-  offset += speed;
-  if(offset>40) offset=0;
+ offset+=4;
+ if(offset>40) offset=0;
 
-  drawRoad();
-  drawPlayer();
+ drawRoad();
+ drawPlayer();
 
-  obstacles.forEach(o=>{
-    o.y += speed;
-    drawObstacle(o);
+ obstacles.forEach(o=>{
+  o.y+=4;
+  drawObstacle(o);
 
-    let x = lanes[o.lane];
+  let x=lanes[o.lane];
+  let ph=isSliding?40:80;
 
-    if(o.y>480 && x<player.x+40 && x+40>player.x){
-      beep(100,0.3);
-      alert("💀 Ofudde!");
-      location.reload();
-    }
-  });
-
-  score++;
+  if(o.y>player.y && o.y<player.y+ph && x<player.x+40 && x+40>player.x){
+    beep(100,0.3);
+    alert("💀 Ofudde!");
+    location.reload();
+  }
+ });
 }
 </script>
 
