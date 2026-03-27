@@ -5,7 +5,7 @@
 <title>Streets of Uganda</title>
 <style>
 body { margin:0; background:black; color:white; text-align:center; font-family:Arial; }
-canvas { background:#222; display:block; margin:auto; }
+canvas { background:#111; display:block; margin:auto; }
 button { padding:10px; margin:5px; font-size:16px; }
 </style>
 </head>
@@ -13,7 +13,6 @@ button { padding:10px; margin:5px; font-size:16px; }
 
 <h1>🚗 Streets of Uganda</h1>
 <button onclick="startGame()">▶️ Tandika</button>
-
 <h3>💰 Coins: <span id="coins">0</span></h3>
 
 <canvas id="game" width="400" height="600"></canvas>
@@ -29,7 +28,7 @@ let gameRunning = false;
 let speed = 3;
 let coins = 0;
 
-// 🎵 MUSIC ONLY
+// 🎵 MUSIC
 const music = {
   racing: new Audio("music/racing.mp3"),
   night: new Audio("music/night.mp3"),
@@ -48,35 +47,74 @@ function playMusic(type){
 // 🚗 PLAYER
 let player = { x:180, y:500, w:40, h:60 };
 
-// 🚧 OBSTACLES (cars, taxis, bodas, tukutuku)
+// 🚧 OBSTACLES
 let obstacles = [];
 
-function spawnObstacle(){
-  let types = ["🚗","🚌","🛵","🛺"];
-  obstacles.push({
-    x: Math.random()*360,
-    y: -60,
-    emoji: types[Math.floor(Math.random()*types.length)]
-  });
+// 🌍 ROAD ANIMATION
+let roadOffset = 0;
+
+// 🛣️ DRAW ROAD
+function drawRoad(){
+  ctx.fillStyle = "#333";
+  ctx.fillRect(0,0,400,600);
+
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 4;
+  ctx.setLineDash([20,20]);
+
+  for(let i = -40; i < 600; i += 40){
+    ctx.beginPath();
+    ctx.moveTo(200, i + roadOffset);
+    ctx.lineTo(200, i + 20 + roadOffset);
+    ctx.stroke();
+  }
+
+  ctx.setLineDash([]);
 }
 
-// 🎮 KEYBOARD CONTROLS
+// 🚗 DRAW PLAYER
+function drawPlayer(){
+  ctx.fillStyle = "red";
+  ctx.fillRect(player.x, player.y, 40, 60);
+
+  ctx.fillStyle = "lightblue";
+  ctx.fillRect(player.x+5, player.y+10, 30, 20);
+}
+
+// 🚧 DRAW OBSTACLES
+function drawObstacle(o){
+  if(o.type==="car") ctx.fillStyle="blue";
+  else if(o.type==="taxi") ctx.fillStyle="yellow";
+  else if(o.type==="boda") ctx.fillStyle="green";
+  else ctx.fillStyle="orange";
+
+  ctx.fillRect(o.x,o.y,40,60);
+}
+
+// 🎮 CONTROLS
 document.addEventListener("keydown", e=>{
   if(e.key==="ArrowLeft") player.x-=20;
   if(e.key==="ArrowRight") player.x+=20;
 });
 
-// 📱 TOUCH CONTROLS (for phone)
+// 📱 TOUCH
 canvas.addEventListener("touchstart", e=>{
-  let touchX = e.touches[0].clientX;
-  if(touchX < window.innerWidth/2){
-    player.x -= 30;
-  } else {
-    player.x += 30;
-  }
+  let x = e.touches[0].clientX;
+  if(x < window.innerWidth/2) player.x -= 30;
+  else player.x += 30;
 });
 
-// 🌍 ROADS SYSTEM
+// 🚧 SPAWN
+function spawnObstacle(){
+  let types = ["car","taxi","boda","tuktuk"];
+  obstacles.push({
+    x: Math.random()*360,
+    y: -60,
+    type: types[Math.floor(Math.random()*types.length)]
+  });
+}
+
+// 🌍 ROADS
 let roads = ["Kampala","Entebbe Road","Entebbe Highway","Jinja","Mbale"];
 let currentRoad = 0;
 
@@ -107,7 +145,7 @@ function changeRoad(){
   }
 }
 
-// 🧠 RACERS (NAMES ONLY)
+// 🧠 RACERS
 let racers = [
   {name:"Omah",price:0,owned:true},
   {name:"Emma",price:100,owned:false},
@@ -159,7 +197,7 @@ function updateCoins(){
   document.getElementById("coins").innerText = Math.floor(coins);
 }
 
-// 🚀 START GAME
+// 🚀 START
 function startGame(){
   gameRunning = true;
   playMusic("racing");
@@ -168,33 +206,32 @@ function startGame(){
   setInterval(changeRoad,15000);
 }
 
-// 🎮 GAME LOOP
+// 🎮 LOOP
 function gameLoop(){
   if(!gameRunning) return;
 
   ctx.clearRect(0,0,400,600);
 
-  // player
-  ctx.fillStyle="red";
-  ctx.fillRect(player.x,player.y,player.w,player.h);
+  // road animation
+  roadOffset += speed;
+  if(roadOffset > 40) roadOffset = 0;
 
-  // obstacles
+  drawRoad();
+  drawPlayer();
+
   obstacles.forEach(o=>{
-    o.y+=speed;
-    ctx.font="30px Arial";
-    ctx.fillText(o.emoji,o.x,o.y);
+    o.y += speed;
+    drawObstacle(o);
 
-    if(o.y>480 && o.x<player.x+40 && o.x+30>player.x){
+    if(o.y>480 && o.x<player.x+40 && o.x+40>player.x){
       alert("💥 Obodde!");
       location.reload();
     }
   });
 
-  // coins
   coins += 0.05;
   updateCoins();
 
-  // random music vibe
   if(Math.random()<0.002) playMusic("chaos");
   if(Math.random()<0.001) playMusic("night");
 }
