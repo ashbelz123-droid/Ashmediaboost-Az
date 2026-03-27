@@ -3,21 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <title>Streets of Uganda</title>
+
 <style>
-body { margin:0; background:black; color:white; text-align:center; font-family:Arial; }
-canvas { background:#111; display:block; margin:auto; }
-button { padding:10px; margin:5px; font-size:16px; }
+body {
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+  overflow:hidden;
+}
+
+/* 🎮 MENU */
+#menu {
+  position:absolute;
+  width:100%;
+  height:100vh;
+  background:linear-gradient(black,#222);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+#menu h1 {
+  font-size:32px;
+  margin-bottom:20px;
+}
+
+#menu button {
+  font-size:20px;
+  padding:15px 30px;
+  border-radius:10px;
+}
+
+/* 🎮 GAME */
+canvas {
+  display:none;
+  background:#111;
+}
+
+/* 🎮 CONTROLS */
+#controls {
+  position:fixed;
+  bottom:20px;
+  width:100%;
+  display:none;
+}
+
+#controls button {
+  font-size:22px;
+  padding:15px;
+  margin:10px;
+  border-radius:10px;
+}
 </style>
 </head>
+
 <body>
 
-<h1>🚗 Streets of Uganda</h1>
-<button onclick="startGame()">▶️ Tandika</button>
-<button onclick="nitro()">⚡ Nitro</button>
+<!-- 🎮 MENU -->
+<div id="menu">
+  <h1>🚗 Streets of Uganda</h1>
+  <button onclick="startGame()">▶️ PLAY</button>
+</div>
 
-<h3>💰 Coins: <span id="coins">0</span> | 🏁 Score: <span id="score">0</span></h3>
-
+<!-- 🎮 GAME -->
 <canvas id="game" width="400" height="600"></canvas>
+
+<!-- 🎮 CONTROLS -->
+<div id="controls">
+  <button onclick="moveLeft()">⬅️</button>
+  <button onclick="moveRight()">➡️</button>
+  <button onclick="nitro()">⚡</button>
+</div>
 
 <script>
 const canvas = document.getElementById("game");
@@ -26,7 +84,6 @@ const ctx = canvas.getContext("2d");
 let gameRunning = false;
 let baseSpeed = 3;
 let speed = baseSpeed;
-let coins = 0;
 let score = 0;
 
 // 🎵 MUSIC
@@ -46,35 +103,49 @@ function playMusic(type){
 }
 
 // 🚗 PLAYER
-let player = { x:180, y:500, w:40, h:60 };
+let player = { x:180, y:500 };
 
 // 🚧 OBSTACLES
 let obstacles = [];
 
-// 🌍 ROAD
+// 🛣️ ROAD
 let roadOffset = 0;
 
 // ⚡ NITRO
 function nitro(){
-  speed = 8;
-  setTimeout(()=>{ speed = baseSpeed; }, 2000);
+  speed = 9;
+  setTimeout(()=> speed = baseSpeed, 2000);
 }
 
-// 🛣️ ROAD DRAW
+// 🎮 CONTROLS
+function moveLeft(){ player.x -= 40; }
+function moveRight(){ player.x += 40; }
+
+// 🚧 SPAWN
+let lanes = [100, 180, 260];
+
+function spawnObstacle(){
+  let types = ["car","taxi","boda"];
+  obstacles.push({
+    x: lanes[Math.floor(Math.random()*lanes.length)],
+    y: -60,
+    type: types[Math.floor(Math.random()*types.length)]
+  });
+}
+
+// 🛣️ DRAW ROAD (pseudo 3D feel)
 function drawRoad(){
-  ctx.fillStyle = "#333";
+  ctx.fillStyle="#222";
   ctx.fillRect(0,0,400,600);
 
-  // lanes
-  ctx.strokeStyle = "white";
-  ctx.lineWidth = 3;
+  ctx.strokeStyle="white";
   ctx.setLineDash([20,20]);
 
-  for(let x=100; x<=300; x+=100){
-    for(let i=-40; i<600; i+=40){
+  for(let x=100;x<=300;x+=100){
+    for(let i=-40;i<600;i+=40){
       ctx.beginPath();
-      ctx.moveTo(x, i + roadOffset);
-      ctx.lineTo(x, i+20 + roadOffset);
+      ctx.moveTo(x,i+roadOffset);
+      ctx.lineTo(x,i+20+roadOffset);
       ctx.stroke();
     }
   }
@@ -84,69 +155,49 @@ function drawRoad(){
 
 // 🚗 PLAYER DRAW
 function drawPlayer(){
-  // shadow
-  ctx.fillStyle = "rgba(0,0,0,0.5)";
-  ctx.fillRect(player.x+5, player.y+5, 40, 60);
+  ctx.shadowColor="red";
+  ctx.shadowBlur=20;
 
-  // car
-  ctx.fillStyle = "red";
-  ctx.fillRect(player.x, player.y, 40, 60);
+  ctx.fillStyle="red";
+  ctx.fillRect(player.x,500,40,60);
 
-  // glass
-  ctx.fillStyle = "lightblue";
-  ctx.fillRect(player.x+5, player.y+10, 30, 20);
+  ctx.shadowBlur=0;
+
+  ctx.fillStyle="lightblue";
+  ctx.fillRect(player.x+5,510,30,20);
 }
 
 // 🚧 OBSTACLES
 function drawObstacle(o){
   if(o.type==="car") ctx.fillStyle="blue";
   else if(o.type==="taxi") ctx.fillStyle="yellow";
-  else if(o.type==="boda") ctx.fillStyle="green";
-  else ctx.fillStyle="orange";
+  else ctx.fillStyle="green";
 
   ctx.fillRect(o.x,o.y,40,60);
 }
 
-// 🎮 CONTROLS
-document.addEventListener("keydown", e=>{
-  if(e.key==="ArrowLeft") player.x-=30;
-  if(e.key==="ArrowRight") player.x+=30;
-});
-
-// 📱 TOUCH
-canvas.addEventListener("touchstart", e=>{
-  let x = e.touches[0].clientX;
-  if(x < window.innerWidth/2) player.x -= 30;
-  else player.x += 30;
-});
-
-// 🚧 SPAWN
-function spawnObstacle(){
-  let types = ["car","taxi","boda","tuktuk"];
-  obstacles.push({
-    x: [80,180,280][Math.floor(Math.random()*3)], // lanes
-    y: -60,
-    type: types[Math.floor(Math.random()*types.length)]
-  });
-}
-
-// 🚀 START
+// 🚀 START GAME
 function startGame(){
-  gameRunning = true;
+  document.getElementById("menu").style.display="none";
+  canvas.style.display="block";
+  document.getElementById("controls").style.display="block";
+
+  gameRunning=true;
   playMusic("racing");
+
   setInterval(gameLoop,20);
   setInterval(spawnObstacle,800);
 }
 
-// 🎮 LOOP
+// 🎮 GAME LOOP
 function gameLoop(){
   if(!gameRunning) return;
 
   ctx.clearRect(0,0,400,600);
 
-  // speed effect
+  // motion effect
   roadOffset += speed;
-  if(roadOffset > 40) roadOffset = 0;
+  if(roadOffset>40) roadOffset=0;
 
   drawRoad();
   drawPlayer();
@@ -161,14 +212,13 @@ function gameLoop(){
     }
   });
 
-  // score + coins
-  coins += 0.05;
-  score += 1;
+  score++;
 
-  document.getElementById("coins").innerText = Math.floor(coins);
-  document.getElementById("score").innerText = score;
+  // speed fade effect
+  ctx.fillStyle="rgba(0,0,0,0.1)";
+  ctx.fillRect(0,0,400,600);
 
-  // random music change
+  // random music switch
   if(Math.random()<0.002) playMusic("chaos");
   if(Math.random()<0.001) playMusic("night");
 }
