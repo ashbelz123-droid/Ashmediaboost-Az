@@ -24,6 +24,10 @@
     Trusted by 1,000+ users • Instant response • Reliable delivery
   </p>
 
+  <p class="limited">⚡ Limited slots available today — high demand!</p>
+
+  <p id="liveUsers" class="live-users">👥 23 users currently placing orders</p>
+
   <button onclick="scrollToOrder()">🔥 Start Order</button>
 </header>
 
@@ -82,24 +86,17 @@
   </p>
 </section>
 
-<!-- 💳 PAYMENT -->
-<section class="payment">
-  <h2>Payment Methods</h2>
-  <p>MTN • Airtel • Bank Transfer</p>
-
-  <div class="trust-box">
-    ✔ Secure payment process<br>
-    ✔ Manual verification<br>
-    ✔ No automatic charges
-  </div>
-
-  <p>Send payment screenshot via WhatsApp after ordering.</p>
-</section>
-
 <!-- 🎁 REWARDS -->
 <section class="rewards">
-  <h2>🎁 Bonus Rewards</h2>
-  <p>Stand a chance to win free views or followers after ordering.</p>
+  <h2>🎁 Open Your Gift</h2>
+
+  <div class="gift-boxes">
+    <button onclick="openGift()">🎁 Box 1</button>
+    <button onclick="openGift()">🎁 Box 2</button>
+    <button onclick="openGift()">🎁 Box 3</button>
+  </div>
+
+  <p id="giftResult"></p>
 </section>
 
 <!-- 📞 CONTACT -->
@@ -107,6 +104,9 @@
   <h2>Need Help?</h2>
   <button onclick="contactWhatsApp()">💬 Chat on WhatsApp</button>
 </section>
+
+<!-- 🔔 POPUP -->
+<div id="popup" class="popup"></div>
 
 <script src="script.js"></script>
 </body>
