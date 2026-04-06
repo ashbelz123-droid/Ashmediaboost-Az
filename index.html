@@ -9,45 +9,22 @@
 
 <body>
 
-<!-- 🔥 HERO -->
 <header class="hero">
   <h1>Ash Media Boost 🚀</h1>
-  <p>Grow Your Social Media Faster & Smarter</p>
+  <p>Grow Faster • Trusted • Instant Delivery</p>
 
   <div class="badges">
-    <span>🔒 Secure Orders</span>
+    <span>🔒 Secure</span>
     <span>💬 WhatsApp Support</span>
-    <span>⚡ Fast Delivery</span>
+    <span>⚡ Fast</span>
   </div>
 
-  <p class="trust-line">
-    Trusted by 1,000+ users • Instant response • Reliable delivery
-  </p>
+  <p class="limited">⚡ Limited slots today</p>
+  <p id="liveUsers" class="live-users"></p>
 
-  <p class="limited">⚡ Limited slots available today — high demand!</p>
-
-  <p id="liveUsers" class="live-users">👥 23 users currently placing orders</p>
-
-  <button onclick="scrollToOrder()">🔥 Start Order</button>
+  <button onclick="scrollToOrder()">Start Order</button>
 </header>
 
-<!-- 🛡️ TRUST -->
-<section class="trust">
-  <h2>Why Choose Us?</h2>
-  <p>
-    We use a direct WhatsApp system to ensure accurate delivery,
-    secure payments, and fast support.
-  </p>
-
-  <div class="trust-box">
-    ✔ Direct admin handling<br>
-    ✔ Verified payments only<br>
-    ✔ Fast WhatsApp response<br>
-    ✔ No automation errors
-  </div>
-</section>
-
-<!-- 📦 ORDER -->
 <section class="order" id="order">
   <h2>Place Your Order</h2>
 
@@ -57,55 +34,27 @@
     <option value="youtube">▶️ YouTube</option>
   </select>
 
-  <select id="type">
+  <select id="type" onchange="updateServiceOptions()">
+    <option value="">Select Service</option>
     <option value="followers">👥 Followers</option>
     <option value="likes">❤️ Likes</option>
     <option value="views">👁️ Views</option>
     <option value="comments">💬 Comments</option>
   </select>
 
-  <select id="quality">
-    <option value="starter">⚡ Starter</option>
-    <option value="refill">🔄 Refill</option>
-    <option value="premium">💎 Premium</option>
-  </select>
+  <!-- Dynamic options -->
+  <div id="serviceOptions"></div>
 
-  <input type="text" id="link" placeholder="Enter your link">
+  <input type="text" id="link" placeholder="Paste your link">
   <input type="number" id="quantity" placeholder="Enter quantity">
 
   <p id="price">Total: 0 UGX</p>
 
-  <small>
-    💡 Price updates automatically • Orders may take up to 45 minutes to start
-  </small>
-
   <button onclick="placeOrder()">🔥 Order via WhatsApp</button>
 
-  <p class="after-order">
-    💬 After sending order, we will guide you through payment via WhatsApp.
-  </p>
+  <p class="after-order">We guide payment after order via WhatsApp</p>
 </section>
 
-<!-- 🎁 REWARDS -->
-<section class="rewards">
-  <h2>🎁 Open Your Gift</h2>
-
-  <div class="gift-boxes">
-    <button onclick="openGift()">🎁 Box 1</button>
-    <button onclick="openGift()">🎁 Box 2</button>
-    <button onclick="openGift()">🎁 Box 3</button>
-  </div>
-
-  <p id="giftResult"></p>
-</section>
-
-<!-- 📞 CONTACT -->
-<section class="contact">
-  <h2>Need Help?</h2>
-  <button onclick="contactWhatsApp()">💬 Chat on WhatsApp</button>
-</section>
-
-<!-- 🔔 POPUP -->
 <div id="popup" class="popup"></div>
 
 <script src="script.js"></script>
