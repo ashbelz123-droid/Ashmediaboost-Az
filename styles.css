@@ -5,19 +5,11 @@
   --border: rgba(255,255,255,0.1);
 }
 
-/* BODY */
 body {
   margin: 0;
   font-family: Arial;
   background: linear-gradient(135deg,#020617,#0f172a);
   color: white;
-  animation: fadeIn 1s ease;
-}
-
-/* FADE */
-@keyframes fadeIn {
-  from {opacity:0}
-  to {opacity:1}
 }
 
 /* LOADER */
@@ -54,7 +46,6 @@ body {
 
 .brand span {color:var(--blue);}
 
-/* BUTTON */
 button {
   background:linear-gradient(135deg,#38bdf8,#0ea5e9);
   border:none;
@@ -63,21 +54,13 @@ button {
   border-radius:12px;
   color:white;
   font-weight:bold;
-  transition:0.3s;
 }
 
-button:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 20px #38bdf8;
-}
-
-/* ORDER */
 .order {
   padding:20px;
   margin:20px;
   border-radius:15px;
   background:var(--glass);
-  backdrop-filter:blur(15px);
 }
 
 input, select {
@@ -90,7 +73,6 @@ input, select {
   color:white;
 }
 
-/* OPTION */
 .option-box {
   background:#1e293b;
   padding:10px;
@@ -102,7 +84,6 @@ input, select {
   border:2px solid var(--blue);
 }
 
-/* TOP BAR */
 .top-bar {
   position:fixed;
   top:10px;
@@ -114,7 +95,6 @@ input, select {
   display:none;
 }
 
-/* FLOAT */
 .whatsapp-float {
   position:fixed;
   bottom:80px;
@@ -124,7 +104,6 @@ input, select {
   border-radius:50%;
 }
 
-/* LIVE BAR */
 .live-bar {
   position:fixed;
   bottom:0;
@@ -141,7 +120,6 @@ input, select {
   to {transform:translateX(-100%)}
 }
 
-/* SUPPORT */
 .support {
   margin:20px;
   padding:20px;
@@ -156,4 +134,4 @@ input, select {
   border-radius:10px;
   text-decoration:none;
   color:white;
-  }
+    }
