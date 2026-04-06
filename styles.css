@@ -11,6 +11,14 @@ body {
   background: #1e293b;
 }
 
+.badges span {
+  background: #334155;
+  padding: 6px 10px;
+  margin: 3px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
 button {
   background: purple;
   color: white;
@@ -18,64 +26,46 @@ button {
   padding: 12px;
   margin-top: 10px;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
 }
 
 button:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-  transition: 0.2s;
+  transform: scale(1.03);
 }
 
-.order, .trust, .rewards, .contact {
+.order {
   padding: 20px;
 }
 
 select, input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-top: 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
 }
 
-.badges span {
-  background: #334155;
-  padding: 6px 10px;
-  margin: 3px;
-  display: inline-block;
-  border-radius: 6px;
-  font-size: 12px;
-}
-
-.trust-line {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #94a3b8;
-}
-
-.trust-box {
+.option-box {
   background: #1e293b;
-  padding: 15px;
+  padding: 12px;
   margin-top: 10px;
   border-radius: 10px;
-  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.after-order {
-  font-size: 13px;
-  text-align: center;
+.option-box:hover {
+  background: #334155;
 }
 
-.limited {
-  color: #facc15;
-  font-size: 13px;
+.option-box.active {
+  border: 2px solid purple;
 }
 
-.live-users {
+.best {
   color: #22c55e;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .popup {
@@ -83,13 +73,20 @@ select, input {
   bottom: 20px;
   left: 20px;
   background: #1e293b;
-  padding: 10px 15px;
+  padding: 10px;
   border-radius: 10px;
-  font-size: 13px;
   display: none;
 }
 
-.gift-boxes button {
-  width: 30%;
-  margin: 5px;
+.live-users {
+  color: #22c55e;
+}
+
+.limited {
+  color: #facc15;
+}
+
+.after-order {
+  font-size: 13px;
+  text-align: center;
 }
