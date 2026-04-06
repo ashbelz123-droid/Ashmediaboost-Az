@@ -22,7 +22,13 @@ button {
   font-size: 16px;
 }
 
-.order, .trust, .payment, .rewards, .contact {
+button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+  transition: 0.2s;
+}
+
+.order, .trust, .rewards, .contact {
   padding: 20px;
 }
 
@@ -60,5 +66,30 @@ select, input {
 .after-order {
   font-size: 13px;
   text-align: center;
-  margin-top: 10px;
+}
+
+.limited {
+  color: #facc15;
+  font-size: 13px;
+}
+
+.live-users {
+  color: #22c55e;
+  font-size: 14px;
+}
+
+.popup {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #1e293b;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 13px;
+  display: none;
+}
+
+.gift-boxes button {
+  width: 30%;
+  margin: 5px;
 }
