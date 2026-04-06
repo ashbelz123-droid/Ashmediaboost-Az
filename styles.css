@@ -1,6 +1,6 @@
 :root {
-  --blue: #38bdf8;
-  --glass: rgba(255,255,255,0.08);
+  --blue:#38bdf8;
+  --glass:rgba(255,255,255,0.08);
 }
 
 body {
@@ -19,6 +19,7 @@ body {
   display:flex;
   justify-content:center;
   align-items:center;
+  z-index:9999;
 }
 
 .logo-circle {
@@ -40,7 +41,6 @@ body {
 
 .brand span {color:var(--blue);}
 
-/* BUTTON */
 button {
   background:linear-gradient(135deg,#38bdf8,#0ea5e9);
   padding:14px;
@@ -48,6 +48,7 @@ button {
   width:100%;
   border-radius:12px;
   color:white;
+  font-weight:bold;
 }
 
 /* ORDER */
@@ -79,16 +80,18 @@ input,select {
   border:2px solid var(--blue);
 }
 
-/* TOP BAR */
+/* 🔥 TOP BAR IMPROVED */
 .top-bar {
   position:fixed;
-  top:10px;
+  top:-60px;
   left:50%;
   transform:translateX(-50%);
-  background:var(--glass);
-  padding:10px;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(10px);
+  padding:12px 20px;
   border-radius:20px;
-  display:none;
+  font-size:14px;
+  transition:0.5s;
 }
 
 /* FLOAT */
@@ -101,7 +104,7 @@ input,select {
   border-radius:50%;
 }
 
-/* LIVE */
+/* LIVE BAR */
 .live-bar {
   position:fixed;
   bottom:0;
@@ -117,3 +120,18 @@ input,select {
   from{transform:translateX(100%)}
   to{transform:translateX(-100%)}
 }
+
+.support {
+  margin:20px;
+  padding:20px;
+  background:var(--glass);
+  border-radius:15px;
+}
+
+.support-btn {
+  padding:10px 20px;
+  background:var(--blue);
+  border-radius:10px;
+  color:white;
+  text-decoration:none;
+    }
