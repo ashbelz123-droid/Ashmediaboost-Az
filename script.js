@@ -17,21 +17,49 @@ const basePrices = {
   }
 };
 
+let selectedQuality = "refill";
+
+function updateServiceOptions() {
+  let type = document.getElementById("type").value;
+  let box = document.getElementById("serviceOptions");
+
+  if (!type) return box.innerHTML = "";
+
+  box.innerHTML = `
+    <div class="option-box" onclick="selectOption(this,'starter')">
+      ⚡ Starter<br><small>Fast & cheap</small>
+    </div>
+
+    <div class="option-box active" onclick="selectOption(this,'refill')">
+      🔄 Refill <span class="best">⭐ Most Popular</span><br>
+      <small>Stable & safe</small>
+    </div>
+
+    <div class="option-box" onclick="selectOption(this,'premium')">
+      💎 Premium<br><small>High quality</small>
+    </div>
+  `;
+}
+
+function selectOption(el, quality) {
+  document.querySelectorAll(".option-box").forEach(e => e.classList.remove("active"));
+  el.classList.add("active");
+  selectedQuality = quality;
+  calculatePrice();
+}
+
 function calculatePrice() {
   let platform = document.getElementById("platform").value;
   let type = document.getElementById("type").value;
-  let quality = document.getElementById("quality").value;
   let qty = document.getElementById("quantity").value;
 
-  if (!qty) return;
+  if (!qty || !type) return;
 
-  let base = basePrices[platform][type]?.[quality];
+  let base = basePrices[platform][type]?.[selectedQuality];
   if (!base) return;
 
   let total = (qty / 1000) * base;
-
-  document.getElementById("price").innerText =
-    "Total: " + Math.round(total) + " UGX";
+  document.getElementById("price").innerText = "Total: " + Math.round(total) + " UGX";
 }
 
 document.querySelectorAll("select, input").forEach(el => {
@@ -41,29 +69,25 @@ document.querySelectorAll("select, input").forEach(el => {
 function placeOrder() {
   let platform = document.getElementById("platform").value;
   let type = document.getElementById("type").value;
-  let quality = document.getElementById("quality").value;
   let link = document.getElementById("link").value;
   let qty = document.getElementById("quantity").value;
   let price = document.getElementById("price").innerText;
 
-  if (!link || !qty) {
-    alert("Please fill all fields");
+  if (!link || !qty || !type) {
+    alert("Fill all fields");
     return;
   }
 
-  let msg = `🔥 *NEW ORDER REQUEST*
+  let msg = `🔥 NEW ORDER
 
-📱 Platform: ${platform}
-📊 Service: ${type}
-⭐ Quality: ${quality}
+Platform: ${platform}
+Service: ${type}
+Quality: ${selectedQuality}
 
-🔗 Link: ${link}
-🔢 Quantity: ${qty}
+Link: ${link}
+Quantity: ${qty}
 
-💰 ${price}
-
--------------------------
-⚠️ Awaiting payment instructions`;
+${price}`;
 
   window.open(`https://wa.me/256749421134?text=${encodeURIComponent(msg)}`);
 }
@@ -72,44 +96,22 @@ function scrollToOrder() {
   document.getElementById("order").scrollIntoView({ behavior: "smooth" });
 }
 
-function contactWhatsApp() {
-  window.open("https://wa.me/256749421134");
-}
-
-/* 🔥 LIVE USERS */
-function updateUsers() {
-  let users = Math.floor(Math.random() * 20) + 15;
+/* LIVE USERS */
+setInterval(() => {
+  let n = Math.floor(Math.random()*20)+15;
   document.getElementById("liveUsers").innerText =
-    `👥 ${users} users currently placing orders`;
-}
-setInterval(updateUsers, 5000);
-updateUsers();
+    `👥 ${n} users placing orders`;
+}, 4000);
 
-/* 🔔 POPUPS */
-const names = ["John", "Alex", "Sarah", "David", "Emma"];
-const services = ["Followers", "Views", "Likes"];
-
-function showPopup() {
-  let name = names[Math.floor(Math.random() * names.length)];
-  let service = services[Math.floor(Math.random() * services.length)];
+/* POPUPS */
+setInterval(() => {
+  let names = ["Alex","John","Emma","David"];
+  let services = ["Followers","Views","Likes"];
 
   let popup = document.getElementById("popup");
-  popup.innerText = `${name} just ordered ${service} 🔥`;
+  popup.innerText =
+    `${names[Math.random()*names.length|0]} bought ${services[Math.random()*services.length|0]}`;
+
   popup.style.display = "block";
-
-  setTimeout(() => popup.style.display = "none", 3000);
-}
-setInterval(showPopup, 7000);
-
-/* 🎁 GIFT */
-function openGift() {
-  let rewards = [
-    "🎉 You won 100 FREE Views!",
-    "🎉 You won 50 Likes!",
-    "😢 Try again next time",
-    "🎉 You won 200 Views!"
-  ];
-
-  let result = rewards[Math.floor(Math.random() * rewards.length)];
-  document.getElementById("giftResult").innerText = result;
-}
+  setTimeout(()=>popup.style.display="none",3000);
+}, 6000);
