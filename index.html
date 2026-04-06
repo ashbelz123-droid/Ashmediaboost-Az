@@ -11,88 +11,86 @@
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="logo-circle">A</div>
-  <h1>Ashmediaboost</h1>
+  <h1>Ashmediaboost 🚀</h1>
 </div>
 
 <!-- TOP BAR -->
 <div id="topBar" class="top-bar"></div>
 
-<!-- ANNOUNCEMENT -->
-<div class="announcement">
-🏆 Complete 7 orders this week & WIN FREE BOOST 🎁
-</div>
-
 <!-- HERO -->
-<header class="hero">
-  <h1>Ash<span>media</span>boost 🚀</h1>
+<section class="hero">
+  <h1>🚀 Social Media Growth Platform</h1>
+  <p>Grow Instagram, TikTok, YouTube & Facebook fast</p>
   <p id="liveUsers"></p>
-  <button onclick="confirmOrder()">🔥 Order via WhatsApp</button>
-</header>
-
-<!-- ORDER -->
-<section class="order">
+  <button onclick="scrollToOrder()">👇 Get Started</button>
+</section>
 
 <!-- PLATFORM CARDS -->
 <div class="platforms">
 
-  <div class="platform-card active" onclick="selectPlatform(this,'instagram')">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-    <p>Instagram</p>
-  </div>
+<div class="platform-card active" onclick="selectPlatform(this,'instagram')">
+📸 Instagram
+</div>
 
-  <div class="platform-card" onclick="selectPlatform(this,'tiktok')">
-    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
-    <p>TikTok</p>
-  </div>
+<div class="platform-card" onclick="selectPlatform(this,'tiktok')">
+🎵 TikTok
+</div>
 
-  <div class="platform-card" onclick="selectPlatform(this,'facebook')">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
-    <p>Facebook</p>
-  </div>
+<div class="platform-card" onclick="selectPlatform(this,'youtube')">
+▶️ YouTube
+</div>
 
-  <div class="platform-card" onclick="selectPlatform(this,'youtube')">
-    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    <p>YouTube</p>
-  </div>
+<div class="platform-card" onclick="selectPlatform(this,'facebook')">
+📘 Facebook
+</div>
 
 </div>
 
+<!-- SERVICES DISPLAY -->
+<section class="services">
+  <h2 id="platformTitle">📸 Instagram Services</h2>
+  <div id="pricePreview"></div>
+</section>
+
+<!-- ORDER -->
+<section class="order" id="order">
+
+<h2>Place Order</h2>
+
 <select id="type" onchange="updateServiceOptions()">
-  <option value="">Select Service</option>
-  <option value="followers">Followers</option>
-  <option value="likes">Likes</option>
-  <option value="views">Views</option>
-  <option value="comments">Comments</option>
-  <option value="subscribers">Subscribers</option>
+<option value="">Select Service</option>
+<option value="followers">Followers</option>
+<option value="likes">Likes</option>
+<option value="views">Views</option>
+<option value="comments">Comments</option>
+<option value="subscribers">Subscribers</option>
 </select>
 
-<div id="serviceOptions"></div>
+<div id="serviceOptions" class="service-panel"></div>
 
 <input id="link" placeholder="Paste link">
 <input id="quantity" type="number" placeholder="Quantity">
 
 <p id="price">Total: 0 UGX</p>
 <p id="refNotice"></p>
-<p id="progress">🏆 Your Progress: 0/7 orders</p>
+<p id="progress">🏆 Your Progress: 0/7</p>
 
 <button onclick="confirmOrder()">🔥 Order Now</button>
 
 </section>
 
-<!-- REFER -->
-<div class="refer-box">
-  <h3>🎁 Refer & Earn</h3>
-  <p>Your Code:</p>
-  <div id="refCode" class="code-box"></div>
-  <button onclick="shareReferral()">Share & Earn</button>
-</div>
+<!-- REFERRAL -->
+<section class="refer-box">
+<h3>🎁 Refer & Earn</h3>
+<div id="refCode"></div>
+<button onclick="shareReferral()">Share</button>
+</section>
 
-<a onclick="openWhatsApp()" class="whatsapp-float">💬</a>
-
-<div class="live-bar">
-  <div id="liveSlide"></div>
-</div>
+<!-- SUPPORT -->
+<section class="support">
+<h3>💬 Need Help?</h3>
+<button onclick="openWhatsApp()">Chat on WhatsApp</button>
+</section>
 
 <script src="script.js"></script>
 </body>
