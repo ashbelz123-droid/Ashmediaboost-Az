@@ -74,4 +74,42 @@ function scrollToOrder() {
 
 function contactWhatsApp() {
   window.open("https://wa.me/256749421134");
-    }
+}
+
+/* 🔥 LIVE USERS */
+function updateUsers() {
+  let users = Math.floor(Math.random() * 20) + 15;
+  document.getElementById("liveUsers").innerText =
+    `👥 ${users} users currently placing orders`;
+}
+setInterval(updateUsers, 5000);
+updateUsers();
+
+/* 🔔 POPUPS */
+const names = ["John", "Alex", "Sarah", "David", "Emma"];
+const services = ["Followers", "Views", "Likes"];
+
+function showPopup() {
+  let name = names[Math.floor(Math.random() * names.length)];
+  let service = services[Math.floor(Math.random() * services.length)];
+
+  let popup = document.getElementById("popup");
+  popup.innerText = `${name} just ordered ${service} 🔥`;
+  popup.style.display = "block";
+
+  setTimeout(() => popup.style.display = "none", 3000);
+}
+setInterval(showPopup, 7000);
+
+/* 🎁 GIFT */
+function openGift() {
+  let rewards = [
+    "🎉 You won 100 FREE Views!",
+    "🎉 You won 50 Likes!",
+    "😢 Try again next time",
+    "🎉 You won 200 Views!"
+  ];
+
+  let result = rewards[Math.floor(Math.random() * rewards.length)];
+  document.getElementById("giftResult").innerText = result;
+}
