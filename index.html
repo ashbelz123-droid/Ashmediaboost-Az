@@ -18,13 +18,13 @@
   </div>
 </div>
 
-<!-- TOP FAKE ORDER -->
+<!-- TOP BAR -->
 <div id="topBar" class="top-bar"></div>
 
 <!-- HERO -->
 <header class="hero">
   <h1 class="brand">Ash<span>media</span>boost 🚀</h1>
-  <p class="tagline">Grow Faster • Trusted • Instant Delivery</p>
+  <p>Grow Faster • Trusted • Instant Delivery</p>
 
   <div class="badges">
     <span>🔒 Secure</span>
@@ -33,20 +33,19 @@
   </div>
 
   <p class="limited">⚡ Limited slots today</p>
-  <p id="liveUsers" class="live-users"></p>
+  <p id="liveUsers"></p>
 
   <button onclick="confirmOrder()">🔥 Order via WhatsApp</button>
-  <p class="trust-text">🔒 Secure • 💬 Instant Support • ⚡ Fast Delivery</p>
+  <p class="trust-text">💬 Opens instantly in WhatsApp (no signup needed)</p>
 </header>
 
 <!-- ORDER -->
-<section class="order" id="order">
+<section class="order">
   <h2>Place Your Order</h2>
 
   <select id="platform">
     <option value="instagram">Instagram</option>
     <option value="tiktok">TikTok</option>
-    <option value="youtube">YouTube</option>
   </select>
 
   <select id="type" onchange="updateServiceOptions()">
@@ -54,7 +53,6 @@
     <option value="followers">Followers</option>
     <option value="likes">Likes</option>
     <option value="views">Views</option>
-    <option value="comments">Comments</option>
   </select>
 
   <div id="serviceOptions"></div>
@@ -70,18 +68,16 @@
 <!-- SUPPORT -->
 <section class="support">
   <h3>📞 Customer Support</h3>
-  <a href="https://wa.me/256740421134" class="support-btn">Chat on WhatsApp</a>
+  <a href="#" onclick="openWhatsApp()" class="support-btn">Chat on WhatsApp</a>
 </section>
 
 <!-- FLOAT -->
-<a href="https://wa.me/256740421134?text=Hello%20Ashmediaboost%20I%20need%20help%20🚀" class="whatsapp-float">💬</a>
+<a href="#" onclick="openWhatsApp()" class="whatsapp-float">💬</a>
 
 <!-- LIVE BAR -->
 <div class="live-bar">
   <div id="liveSlide"></div>
 </div>
-
-<div id="popup" class="popup"></div>
 
 <script src="script.js"></script>
 </body>
