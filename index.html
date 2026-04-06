@@ -9,86 +9,105 @@
 
 <body>
 
-  <!-- 🔥 HERO SECTION -->
-  <header class="hero">
-    <h1>Ash Media Boost 🚀</h1>
-    <p>Boost Your Presence. Grow Faster.</p>
+<!-- 🔥 HERO -->
+<header class="hero">
+  <h1>Ash Media Boost 🚀</h1>
+  <p>Grow Your Social Media Faster & Smarter</p>
 
-    <div class="badges">
-      <span>🔒 Secure Orders</span>
-      <span>💬 WhatsApp Support</span>
-      <span>⚡ Fast Delivery</span>
-    </div>
+  <div class="badges">
+    <span>🔒 Secure Orders</span>
+    <span>💬 WhatsApp Support</span>
+    <span>⚡ Fast Delivery</span>
+  </div>
 
-    <button onclick="scrollToOrder()">🔥 Order Now</button>
-  </header>
+  <p class="trust-line">
+    Trusted by 1,000+ users • Instant response • Reliable delivery
+  </p>
 
-  <!-- 🛡️ TRUST SECTION -->
-  <section class="trust">
-    <h2>Why Choose Us?</h2>
-    <p>
-      We use a manual WhatsApp-based system to ensure accurate delivery,
-      secure payments, and real-time support.
-    </p>
+  <button onclick="scrollToOrder()">🔥 Start Order</button>
+</header>
 
-    <div class="trust-box">
-      ✔ No fake automation<br>
-      ✔ Direct admin support<br>
-      ✔ Verified payments only<br>
-      ✔ Fast response time
-    </div>
-  </section>
+<!-- 🛡️ TRUST -->
+<section class="trust">
+  <h2>Why Choose Us?</h2>
+  <p>
+    We use a direct WhatsApp system to ensure accurate delivery,
+    secure payments, and fast support.
+  </p>
 
-  <!-- 🔥 SERVICES -->
-  <section class="services">
-    <h2>Our Services</h2>
+  <div class="trust-box">
+    ✔ Direct admin handling<br>
+    ✔ Verified payments only<br>
+    ✔ Fast WhatsApp response<br>
+    ✔ No automation errors
+  </div>
+</section>
 
-    <div class="card">📱 Instagram Followers</div>
-    <div class="card">🎵 TikTok Views</div>
-    <div class="card">📺 YouTube Views</div>
-    <div class="card">📘 Facebook Likes</div>
+<!-- 📦 ORDER -->
+<section class="order" id="order">
+  <h2>Place Your Order</h2>
 
-  </section>
+  <select id="platform">
+    <option value="instagram">📸 Instagram</option>
+    <option value="tiktok">🎵 TikTok</option>
+    <option value="youtube">▶️ YouTube</option>
+  </select>
 
-  <!-- 📦 ORDER SECTION -->
-  <section class="order" id="order">
-    <h2>Place Your Order</h2>
+  <select id="type">
+    <option value="followers">👥 Followers</option>
+    <option value="likes">❤️ Likes</option>
+    <option value="views">👁️ Views</option>
+    <option value="comments">💬 Comments</option>
+  </select>
 
-    <select id="service">
-      <option value="instagram_followers">Instagram Followers</option>
-      <option value="tiktok_views">TikTok Views</option>
-      <option value="youtube_views">YouTube Views</option>
-    </select>
+  <select id="quality">
+    <option value="starter">⚡ Starter</option>
+    <option value="refill">🔄 Refill</option>
+    <option value="premium">💎 Premium</option>
+  </select>
 
-    <input type="text" id="link" placeholder="Enter your link">
+  <input type="text" id="link" placeholder="Enter your link">
+  <input type="number" id="quantity" placeholder="Enter quantity">
 
-    <input type="number" id="quantity" placeholder="Enter quantity">
+  <p id="price">Total: 0 UGX</p>
 
-    <p id="price">Total: 0 UGX</p>
+  <small>
+    💡 Price updates automatically • Orders may take up to 45 minutes to start
+  </small>
 
-    <button onclick="placeOrder()">Order via WhatsApp</button>
-  </section>
+  <button onclick="placeOrder()">🔥 Order via WhatsApp</button>
 
-  <!-- 💳 PAYMENT -->
-  <section class="payment">
-    <h2>Payment Methods</h2>
-    <p>MTN • Airtel • Bank Transfer</p>
+  <p class="after-order">
+    💬 After sending order, we will guide you through payment via WhatsApp.
+  </p>
+</section>
 
-    <p>After payment, send screenshot via WhatsApp.</p>
-  </section>
+<!-- 💳 PAYMENT -->
+<section class="payment">
+  <h2>Payment Methods</h2>
+  <p>MTN • Airtel • Bank Transfer</p>
 
-  <!-- 🎁 REWARDS -->
-  <section class="rewards">
-    <h2>🎁 Rewards</h2>
-    <p>Open gift box and win free views or followers.</p>
-  </section>
+  <div class="trust-box">
+    ✔ Secure payment process<br>
+    ✔ Manual verification<br>
+    ✔ No automatic charges
+  </div>
 
-  <!-- 📞 CONTACT -->
-  <section class="contact">
-    <h2>Need Help?</h2>
-    <button onclick="contactWhatsApp()">💬 Chat on WhatsApp</button>
-  </section>
+  <p>Send payment screenshot via WhatsApp after ordering.</p>
+</section>
 
-  <script src="script.js"></script>
+<!-- 🎁 REWARDS -->
+<section class="rewards">
+  <h2>🎁 Bonus Rewards</h2>
+  <p>Stand a chance to win free views or followers after ordering.</p>
+</section>
+
+<!-- 📞 CONTACT -->
+<section class="contact">
+  <h2>Need Help?</h2>
+  <button onclick="contactWhatsApp()">💬 Chat on WhatsApp</button>
+</section>
+
+<script src="script.js"></script>
 </body>
 </html>
