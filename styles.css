@@ -1,0 +1,64 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #0f172a;
+  color: white;
+}
+
+.hero {
+  text-align: center;
+  padding: 40px;
+  background: #1e293b;
+}
+
+button {
+  background: purple;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.order, .trust, .payment, .rewards, .contact {
+  padding: 20px;
+}
+
+select, input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.badges span {
+  background: #334155;
+  padding: 6px 10px;
+  margin: 3px;
+  display: inline-block;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.trust-line {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.trust-box {
+  background: #1e293b;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.after-order {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+}
