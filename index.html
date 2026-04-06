@@ -18,10 +18,9 @@
   </div>
 </div>
 
-<!-- TOP BAR -->
+<!-- TOP ORDER BAR -->
 <div id="topBar" class="top-bar"></div>
 
-<!-- HERO -->
 <header class="hero">
   <h1 class="brand">Ash<span>media</span>boost 🚀</h1>
   <p>Grow Faster • Trusted • Instant Delivery</p>
@@ -39,13 +38,14 @@
   <p class="trust-text">💬 Opens instantly in WhatsApp (no signup needed)</p>
 </header>
 
-<!-- ORDER -->
 <section class="order">
   <h2>Place Your Order</h2>
 
   <select id="platform">
-    <option value="instagram">Instagram</option>
-    <option value="tiktok">TikTok</option>
+    <option value="instagram">📸 Instagram</option>
+    <option value="tiktok">🎵 TikTok</option>
+    <option value="facebook">📘 Facebook</option>
+    <option value="youtube">▶️ YouTube</option>
   </select>
 
   <select id="type" onchange="updateServiceOptions()">
@@ -53,6 +53,8 @@
     <option value="followers">Followers</option>
     <option value="likes">Likes</option>
     <option value="views">Views</option>
+    <option value="comments">Comments</option>
+    <option value="subscribers">Subscribers</option>
   </select>
 
   <div id="serviceOptions"></div>
@@ -65,16 +67,13 @@
   <button onclick="confirmOrder()">🔥 Order Now</button>
 </section>
 
-<!-- SUPPORT -->
 <section class="support">
   <h3>📞 Customer Support</h3>
   <a href="#" onclick="openWhatsApp()" class="support-btn">Chat on WhatsApp</a>
 </section>
 
-<!-- FLOAT -->
 <a href="#" onclick="openWhatsApp()" class="whatsapp-float">💬</a>
 
-<!-- LIVE BAR -->
 <div class="live-bar">
   <div id="liveSlide"></div>
 </div>
