@@ -11,68 +11,84 @@
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="loader-content">
-    <div class="logo-circle">A</div>
-    <h1>Ashmediaboost</h1>
-    <p>Loading your growth engine 🚀</p>
-  </div>
+  <div class="logo-circle">A</div>
+  <h1>Ashmediaboost</h1>
 </div>
 
-<!-- TOP ORDER BAR -->
+<!-- TOP BAR -->
 <div id="topBar" class="top-bar"></div>
 
+<!-- ANNOUNCEMENT -->
+<div class="announcement">
+🏆 Complete 7 orders this week & WIN FREE BOOST 🎁
+</div>
+
+<!-- HERO -->
 <header class="hero">
-  <h1 class="brand">Ash<span>media</span>boost 🚀</h1>
-  <p>Grow Faster • Trusted • Instant Delivery</p>
-
-  <div class="badges">
-    <span>🔒 Secure</span>
-    <span>💬 WhatsApp Support</span>
-    <span>⚡ Fast</span>
-  </div>
-
-  <p class="limited">⚡ Limited slots today</p>
+  <h1>Ash<span>media</span>boost 🚀</h1>
   <p id="liveUsers"></p>
-
   <button onclick="confirmOrder()">🔥 Order via WhatsApp</button>
-  <p class="trust-text">💬 Opens instantly in WhatsApp (no signup needed)</p>
 </header>
 
+<!-- ORDER -->
 <section class="order">
-  <h2>Place Your Order</h2>
 
-  <select id="platform">
-    <option value="instagram">📸 Instagram</option>
-    <option value="tiktok">🎵 TikTok</option>
-    <option value="facebook">📘 Facebook</option>
-    <option value="youtube">▶️ YouTube</option>
-  </select>
+<!-- PLATFORM CARDS -->
+<div class="platforms">
 
-  <select id="type" onchange="updateServiceOptions()">
-    <option value="">Select Service</option>
-    <option value="followers">Followers</option>
-    <option value="likes">Likes</option>
-    <option value="views">Views</option>
-    <option value="comments">Comments</option>
-    <option value="subscribers">Subscribers</option>
-  </select>
+  <div class="platform-card active" onclick="selectPlatform(this,'instagram')">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+    <p>Instagram</p>
+  </div>
 
-  <div id="serviceOptions"></div>
+  <div class="platform-card" onclick="selectPlatform(this,'tiktok')">
+    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
+    <p>TikTok</p>
+  </div>
 
-  <input type="text" id="link" placeholder="Paste your link">
-  <input type="number" id="quantity" placeholder="Enter quantity">
+  <div class="platform-card" onclick="selectPlatform(this,'facebook')">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+    <p>Facebook</p>
+  </div>
 
-  <p id="price">Total: 0 UGX</p>
+  <div class="platform-card" onclick="selectPlatform(this,'youtube')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    <p>YouTube</p>
+  </div>
 
-  <button onclick="confirmOrder()">🔥 Order Now</button>
+</div>
+
+<select id="type" onchange="updateServiceOptions()">
+  <option value="">Select Service</option>
+  <option value="followers">Followers</option>
+  <option value="likes">Likes</option>
+  <option value="views">Views</option>
+  <option value="comments">Comments</option>
+  <option value="subscribers">Subscribers</option>
+</select>
+
+<div id="serviceOptions"></div>
+
+<input id="link" placeholder="Paste link">
+<input id="quantity" type="number" placeholder="Quantity">
+
+<p id="price">Total: 0 UGX</p>
+<p id="refNotice"></p>
+<p id="progress">🏆 Your Progress: 0/7 orders</p>
+
+<button onclick="confirmOrder()">🔥 Order Now</button>
+
 </section>
 
-<section class="support">
-  <h3>📞 Customer Support</h3>
-  <a href="#" onclick="openWhatsApp()" class="support-btn">Chat on WhatsApp</a>
-</section>
+<!-- REFER -->
+<div class="refer-box">
+  <h3>🎁 Refer & Earn</h3>
+  <p>Your Code:</p>
+  <div id="refCode" class="code-box"></div>
+  <button onclick="shareReferral()">Share & Earn</button>
+</div>
 
-<a href="#" onclick="openWhatsApp()" class="whatsapp-float">💬</a>
+<a onclick="openWhatsApp()" class="whatsapp-float">💬</a>
 
 <div class="live-bar">
   <div id="liveSlide"></div>
