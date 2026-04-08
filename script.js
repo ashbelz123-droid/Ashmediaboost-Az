@@ -1,7 +1,10 @@
 const topBar=document.getElementById("topBar");
 const liveUsers=document.getElementById("liveUsers");
+const price=document.getElementById("price");
 
-setTimeout(()=>loader.style.display="none",1200);
+setTimeout(()=>{
+loader.style.display="none";
+},2200);
 
 let selectedPlatform="instagram";
 let selectedQuality="organic";
@@ -43,20 +46,32 @@ let type=document.getElementById("type").value;
 let box=document.getElementById("serviceOptions");
 
 if(!basePrices[selectedPlatform][type]){
-box.innerHTML="<p>Not available</p>";
+box.innerHTML="Not available";
 return;
 }
 
 box.innerHTML=`
-<div class="option-card" onclick="selectQuality('starter')">⚡ Starter Boost</div>
-<div class="option-card" onclick="selectQuality('organic')">🌱 Organic Growth ⭐</div>
-<div class="option-card" onclick="selectQuality('premium')">💎 Premium Combo</div>
+<div class="option-card" onclick="selectQuality(this,'starter')">⚡ Starter</div>
+<div class="option-card" onclick="selectQuality(this,'organic')">
+<div class="badge">⭐ POPULAR</div>🌱 Organic</div>
+<div class="option-card" onclick="selectQuality(this,'premium')">
+<div class="badge premium-badge">🔥 BEST</div>💎 Premium</div>
 `;
+
+selectedQuality="organic";
 }
 
-function selectQuality(q){
+function selectQuality(el,q){
+document.querySelectorAll(".option-card").forEach(e=>e.classList.remove("active"));
+el.classList.add("active");
+
 selectedQuality=q;
 calculatePrice();
+
+let fx=document.createElement("div");
+fx.className="sparkle";
+el.appendChild(fx);
+setTimeout(()=>fx.remove(),500);
 }
 
 function calculatePrice(){
@@ -69,20 +84,10 @@ return;
 }
 
 let base=basePrices[selectedPlatform]?.[type]?.[selectedQuality];
-if(!base){
-price.innerText="Service not available";
-return;
-}
+if(!base)return;
 
 let total=(qty/1000)*base;
-let converted=total*rates[currency];
-
-price.innerText=`💰 ${Math.round(converted)} ${currency}`;
-}
-
-function changeCurrency(){
-currency=document.getElementById("currency").value;
-calculatePrice();
+price.innerText=`💰 ${Math.round(total)} ${currency}`;
 }
 
 function confirmOrder(){
@@ -90,52 +95,39 @@ let type=document.getElementById("type").value;
 let link=document.getElementById("link").value;
 let qty=document.getElementById("quantity").value;
 
-if(!type||!link||!qty){
-alert("Fill all fields");
-return;
-}
-
-let msg=`🚀 NEW ORDER
-
+let msg=`🚀 ORDER
 Platform:${selectedPlatform}
 Service:${type}
 Package:${selectedQuality}
-
-Link:${link}
 Qty:${qty}
 ${price.innerText}
-
-Join Channel:
-https://whatsapp.com/channel/0029VbCSFDCBadmaR5Memh16`;
+Link:${link}`;
 
 window.open(`https://wa.me/256740421134?text=${encodeURIComponent(msg)}`);
 }
 
+/* LIVE USERS */
+setInterval(()=>{
+liveUsers.innerText=`👥 ${Math.floor(Math.random()*30)+20} users online`;
+},4000);
+
+/* FAKE ORDERS */
+let nums=["+256***78","+254***21","+234***44"];
+setInterval(()=>{
+topBar.innerText=`📲 ${nums[Math.floor(Math.random()*nums.length)]} ordered`;
+},5000);
+
+/* REF */
+refCode.innerText="ASH"+Math.floor(Math.random()*999999);
+
+function shareReferral(){
+window.open(`https://wa.me/?text=Join Ashmediaboost`);
+}
+
 function scrollToOrder(){
-document.getElementById("orderSection").scrollIntoView({behavior:"smooth"});
+orderSection.scrollIntoView({behavior:"smooth"});
 }
 
 function openWhatsApp(){
 window.open("https://wa.me/256740421134");
-}
-
-/* LIVE USERS */
-setInterval(()=>{
-let n=Math.floor(Math.random()*30)+20;
-liveUsers.innerText=`👥 ${n} users online`;
-},4000);
-
-/* FAKE ORDERS */
-let nums=["+256***78","+254***21","+234***44","+27***55"];
-setInterval(()=>{
-topBar.innerText=`📲 ${nums[Math.floor(Math.random()*nums.length)]} just ordered`;
-},5000);
-
-/* REF */
-let ref="ASH"+Math.floor(Math.random()*999999);
-refCode.innerText=ref;
-
-function shareReferral(){
-let link=location.origin+"?ref="+ref;
-window.open(`https://wa.me/?text=${encodeURIComponent(link)}`);
-}
+  }
