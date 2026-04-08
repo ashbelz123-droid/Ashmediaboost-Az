@@ -1,166 +1,123 @@
-let currency="UGX";
-let selectedPlatform="instagram";
-let selectedQuality="organic";
-
-const basePrices={
-instagram:{followers:{starter:8000,organic:15000,premium:30000}},
-tiktok:{followers:{starter:7000,organic:13000,premium:28000}},
-facebook:{followers:{starter:7000,organic:12000,premium:25000}},
-youtube:{subscribers:{starter:15000,organic:25000,premium:40000}}
-};
-
-const multipliers={UGX:1,KES:0.05,NGN:0.25,USD:0.001};
+body{
+background:#020617;
+color:white;
+font-family:sans-serif;
+margin:0;
+padding:60px 0;
+}
 
 /* LOADER */
-window.addEventListener("load",()=>{
-setTimeout(()=>document.getElementById("loader").style.display="none",1200);
-});
+#loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#020617;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
 
-/* PLATFORM */
-function selectPlatform(el,p){
-document.querySelectorAll(".platform-card").forEach(e=>e.classList.remove("active"));
-el.classList.add("active");
-selectedPlatform=p;
+/* UI */
+.glass{
+background:rgba(255,255,255,0.05);
+border-radius:15px;
+margin:10px;
+padding:15px;
+}
 
-navigator.vibrate && navigator.vibrate(50);
+.platforms{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
 
-updateServiceOptions();
-calculatePrice();
+.platform-card{
+text-align:center;
+padding:15px;
+background:rgba(255,255,255,0.05);
+border-radius:10px;
+transition:0.2s;
+}
+
+.platform-card img{width:26px;}
+
+.platform-card.active{
+border:2px solid #38bdf8;
+box-shadow:0 0 12px rgba(56,189,248,0.6);
+}
+
+.platform-card:active{
+transform:scale(0.95);
+box-shadow:0 0 20px rgba(56,189,248,0.8);
+}
+
+input,select,button{
+width:100%;
+padding:14px;
+margin-top:10px;
+border-radius:10px;
+border:none;
+}
+
+button{
+background:linear-gradient(135deg,#38bdf8,#6366f1);
+color:white;
+transition:0.2s;
+}
+
+button:active{
+transform:scale(0.96);
 }
 
 /* OPTIONS */
-function updateServiceOptions(){
-document.getElementById("serviceOptions").innerHTML=`
-<div class="option-card" onclick="selectQuality(this,'starter')">⚡ Starter</div>
-<div class="option-card active" onclick="selectQuality(this,'organic')">⭐ Organic</div>
-<div class="option-card" onclick="selectQuality(this,'premium')">🔥 Premium</div>`;
+.option-card{
+padding:12px;
+margin-top:8px;
+background:rgba(255,255,255,0.08);
+border-radius:10px;
+text-align:center;
+transition:0.2s;
 }
 
-/* QUALITY */
-function selectQuality(el,q){
-document.querySelectorAll(".option-card").forEach(e=>e.classList.remove("active"));
-el.classList.add("active");
-selectedQuality=q;
-calculatePrice();
+.option-card.active{
+border:2px solid #38bdf8;
 }
 
-/* PRICE */
-function calculatePrice(){
-let qty=Number(document.getElementById("quantity").value);
-let type=document.getElementById("type").value;
-
-if(!qty||!type){
-document.getElementById("price").innerText="💰 Total: Select options";
-return;
+/* JOIN */
+.join-content{
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-let base=basePrices[selectedPlatform]?.[type]?.[selectedQuality];
-if(!base){
-document.getElementById("price").innerText="⚠️ Not available";
-return;
+.join-btn{
+background:#25D366;
+padding:10px;
+border-radius:8px;
+color:white;
+text-decoration:none;
 }
 
-let total=(qty/1000)*base;
-total=total*multipliers[currency];
-total=Math.round(total);
-
-let icons={
-followers:"👥",
-likes:"❤️",
-views:"👁",
-subscribers:"▶️"
-};
-
-document.getElementById("price").innerText=
-`💰 ${total.toLocaleString()} ${currency} • ${icons[type]} ${type}`;
+/* POPUP */
+#orderPopup{
+position:fixed;
+top:80px;
+left:50%;
+transform:translateX(-50%);
 }
 
-/* ORDER VALIDATION */
-function confirmOrder(){
-let link=document.getElementById("link").value.trim();
-let error=document.getElementById("linkError");
-
-const rules={
-instagram:"instagram.com",
-tiktok:"tiktok.com",
-facebook:"facebook.com",
-youtube:"youtube.com"
-};
-
-if(!link){
-error.innerText="Enter link";
-return;
+.popup{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+padding:12px;
+border-radius:12px;
+margin-top:10px;
+animation:slideDown 0.4s;
 }
 
-if(!link.includes(rules[selectedPlatform])){
-error.innerText="Invalid link for selected platform";
-return;
+@keyframes slideDown{
+from{opacity:0;transform:translate(-50%,-20px);}
+to{opacity:1;transform:translate(-50%,0);}
 }
-
-error.innerText="";
-
-let msg=`🚀 ORDER
-Platform:${selectedPlatform}
-Package:${selectedQuality}
-${document.getElementById("price").innerText}
-Link:${link}`;
-
-window.open(`https://wa.me/256740421134?text=${encodeURIComponent(msg)}`);
-}
-
-/* SHARE */
-function shareReferral(){
-let link="https://ashmediaboost.vercel.app";
-
-let msg=`🔥 Grow fast with Âshmēdìãßòøst 🚀
-Followers • Likes • Views
-
-👉 ${link}`;
-
-window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
-}
-
-/* POPUPS */
-const countries=[
-{code:"+256",flag:"🇺🇬"},
-{code:"+254",flag:"🇰🇪"},
-{code:"+234",flag:"🇳🇬"},
-{code:"+255",flag:"🇹🇿"},
-{code:"+1",flag:"🇺🇸"}
-];
-
-const platforms=["Instagram","TikTok","Facebook","YouTube"];
-const services=["followers","likes","views"];
-
-function showPopup(){
-let c=countries[Math.floor(Math.random()*countries.length)];
-let p=platforms[Math.floor(Math.random()*platforms.length)];
-let s=services[Math.floor(Math.random()*services.length)];
-let amount=Math.floor(Math.random()*9000+1000);
-
-let div=document.createElement("div");
-div.className="popup";
-div.innerHTML=`${c.flag} ${c.code} user<br>just bought ${amount} ${s} on ${p}`;
-
-document.getElementById("orderPopup").appendChild(div);
-
-setTimeout(()=>div.remove(),4000);
-}
-
-setInterval(showPopup,5000);
-
-/* CURRENCY */
-function changeCurrency(){
-currency=document.getElementById("currency").value;
-calculatePrice();
-}
-
-/* INIT */
-window.addEventListener("load",()=>{
-updateServiceOptions();
-calculatePrice();
-});
-
-function scrollToOrder(){
-document.getElementById("orderSection").scrollIntoView({behavior:"smooth"});
-         }
