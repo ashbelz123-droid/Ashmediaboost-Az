@@ -9,7 +9,7 @@ NGN:0.25,ZAR:0.012,GHS:0.02,EGP:0.016,
 USD:0.001,EUR:0.0009,GBP:0.0008
 };
 
-/* BASE */
+/* BASE PRICES */
 const basePrices={
 instagram:{followers:{starter:8000,organic:15000,premium:30000}},
 tiktok:{followers:{starter:7000,organic:13000,premium:28000}},
@@ -83,7 +83,7 @@ return;
 }
 
 box.innerHTML=`
-<div onclick="selectedQuality='starter';calculatePrice()">Starter</div>
+<div onclick="selectedQuality='starter';calculatePrice()">⚡ Starter</div>
 <div onclick="selectedQuality='organic';calculatePrice()">⭐ Organic</div>
 <div onclick="selectedQuality='premium';calculatePrice()">🔥 Premium</div>
 `;
@@ -96,7 +96,13 @@ if(!link.startsWith("http")){
 document.getElementById("linkError").innerText="Invalid link";
 return;
 }
-let msg=`ORDER\n${document.getElementById("price").innerText}\n${link}`;
+
+let msg=`🚀 ORDER
+Platform:${selectedPlatform}
+Package:${selectedQuality}
+${document.getElementById("price").innerText}
+Link:${link}`;
+
 window.open(`https://wa.me/256740421134?text=${encodeURIComponent(msg)}`);
 }
 
@@ -107,7 +113,7 @@ document.getElementById("refCode").innerText=ref;
 
 function shareReferral(){
 let link="https://ashmediaboost-az.vercel.app/?ref="+ref;
-window.open(`https://wa.me/?text=${encodeURIComponent("Join 🚀 "+link)}`);
+window.open(`https://wa.me/?text=${encodeURIComponent("🚀 Join Ashmediaboost "+link)}`);
 }
 
 /* GEO */
@@ -124,4 +130,14 @@ document.getElementById("currency").value=c;
 function changeCurrency(){
 currency=document.getElementById("currency").value;
 calculatePrice();
-  }
+}
+
+/* SCROLL */
+function scrollToOrder(){
+document.getElementById("orderSection").scrollIntoView({behavior:"smooth"});
+}
+
+/* WHATSAPP */
+function openWhatsApp(){
+window.open("https://wa.me/256740421134");
+}
