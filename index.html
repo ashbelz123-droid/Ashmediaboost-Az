@@ -49,32 +49,33 @@
 <div class="platforms">
 
 <div class="platform-card active" onclick="selectPlatform(this,'instagram')">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
 <p>Instagram</p>
 </div>
 
 <div class="platform-card" onclick="selectPlatform(this,'tiktok')">
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/09/TikTok_logo.svg">
+<img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
 <p>TikTok</p>
 </div>
 
 <div class="platform-card" onclick="selectPlatform(this,'facebook')">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
 <p>Facebook</p>
 </div>
 
 <div class="platform-card" onclick="selectPlatform(this,'youtube')">
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg">
+<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
 <p>YouTube</p>
 </div>
 
 </div>
 
-<select id="type" onchange="updateServiceOptions()">
+<select id="type" onchange="updateServiceOptions();calculatePrice()">
 <option value="">Select Service</option>
-<option value="followers">Audience Growth</option>
-<option value="likes">Engagement Boost</option>
-<option value="views">Reach Amplifier</option>
+<option value="followers">👥 Followers</option>
+<option value="likes">❤️ Likes</option>
+<option value="views">👁 Views</option>
+<option value="subscribers">▶️ Subscribers</option>
 </select>
 
 <div id="serviceOptions"></div>
