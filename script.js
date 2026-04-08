@@ -8,8 +8,6 @@ let selectedPlatform="instagram";
 let selectedQuality="organic";
 let currency="UGX";
 
-const rates={UGX:1,KES:0.035,NGN:0.2,USD:0.00027};
-
 const basePrices={
 instagram:{
 followers:{starter:8000,organic:15000,premium:30000},
@@ -135,11 +133,30 @@ setInterval(()=>{
 topBar.innerText=`📲 ${nums[Math.floor(Math.random()*nums.length)]} ordered`;
 },5000);
 
-/* REF */
-refCode.innerText="ASH"+Math.floor(Math.random()*999999);
+/* REF (FIXED) */
+let savedRef=localStorage.getItem("refCode");
+if(!savedRef){
+savedRef="ASH"+Math.floor(Math.random()*999999);
+localStorage.setItem("refCode",savedRef);
+}
+document.getElementById("refCode").innerText=savedRef;
 
+/* SHARE FIXED */
 function shareReferral(){
-window.open(`https://wa.me/?text=Join Ashmediaboost`);
+let ref=savedRef;
+let link="https://ashmediaboost-az.vercel.app/?ref="+ref;
+
+let msg=`🚀 Join Âshmēdìãßòøst!
+
+🔥 Grow fast
+💎 Real engagement
+🎁 Earn rewards
+
+Referral Code: ${ref}
+
+🔗 ${link}`;
+
+window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
 }
 
 function scrollToOrder(){
@@ -148,4 +165,4 @@ orderSection.scrollIntoView({behavior:"smooth"});
 
 function openWhatsApp(){
 window.open("https://wa.me/256740421134");
-  }
+                     }
