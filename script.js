@@ -2,7 +2,6 @@ let currency="UGX";
 let selectedPlatform="instagram";
 let selectedQuality="organic";
 
-/* PRICES */
 const basePrices={
 instagram:{followers:{starter:8000,organic:15000,premium:30000}},
 tiktok:{followers:{starter:7000,organic:13000,premium:28000}},
@@ -12,24 +11,21 @@ youtube:{subscribers:{starter:15000,organic:25000,premium:40000}}
 
 const multipliers={UGX:1,KES:0.05,NGN:0.25,USD:0.001};
 
-/* LOADER FIX */
+/* LOADER */
 window.addEventListener("load",()=>{
-setTimeout(()=>{
-document.getElementById("loader").style.display="none";
-},1500);
+setTimeout(()=>document.getElementById("loader").style.display="none",1200);
 });
 
-/* PRICE */
-function calculatePrice(){
-let qty=document.getElementById("quantity").value;
-let type=document.getElementById("type").value;
-if(!qty||!type)return;
+/* PLATFORM */
+function selectPlatform(el,p){
+document.querySelectorAll(".platform-card").forEach(e=>e.classList.remove("active"));
+el.classList.add("active");
+selectedPlatform=p;
 
-let base=basePrices[selectedPlatform]?.[type]?.[selectedQuality];
-if(!base)return;
+navigator.vibrate && navigator.vibrate(50);
 
-let total=(qty/1000)*base*multipliers[currency];
-document.getElementById("price").innerText=`💰 ${Math.round(total)} ${currency}`;
+updateServiceOptions();
+calculatePrice();
 }
 
 /* OPTIONS */
@@ -40,6 +36,7 @@ document.getElementById("serviceOptions").innerHTML=`
 <div class="option-card" onclick="selectQuality(this,'premium')">🔥 Premium</div>`;
 }
 
+/* QUALITY */
 function selectQuality(el,q){
 document.querySelectorAll(".option-card").forEach(e=>e.classList.remove("active"));
 el.classList.add("active");
@@ -47,31 +44,65 @@ selectedQuality=q;
 calculatePrice();
 }
 
-/* PLATFORM */
-function selectPlatform(el,p){
-document.querySelectorAll(".platform-card").forEach(e=>e.classList.remove("active"));
-el.classList.add("active");
-selectedPlatform=p;
-}
+/* PRICE */
+function calculatePrice(){
+let qty=document.getElementById("quantity").value;
+let type=document.getElementById("type").value;
 
-/* ORDER */
-function confirmOrder(){
-let link=document.getElementById("link").value;
-if(!link.startsWith("http")){
-document.getElementById("linkError").innerText="Invalid link";
+if(!qty||!type){
+document.getElementById("price").innerText="💰 Total: Select options";
 return;
 }
-window.open(`https://wa.me/256740421134?text=${encodeURIComponent(link)}`);
+
+let base=basePrices[selectedPlatform]?.[type]?.[selectedQuality];
+if(!base){
+document.getElementById("price").innerText="⚠️ Not available";
+return;
 }
 
-/* 🌍 REAL COUNTRY POPUP */
+let total=(qty/1000)*base*multipliers[currency];
+document.getElementById("price").innerText=`💰 ${Math.round(total)} ${currency}`;
+}
+
+/* ORDER VALIDATION */
+function confirmOrder(){
+let link=document.getElementById("link").value.trim();
+let error=document.getElementById("linkError");
+
+const rules={
+instagram:"instagram.com",
+tiktok:"tiktok.com",
+facebook:"facebook.com",
+youtube:"youtube.com"
+};
+
+if(!link){
+error.innerText="Enter link";
+return;
+}
+
+if(!link.includes(rules[selectedPlatform])){
+error.innerText="Invalid link for selected platform";
+return;
+}
+
+error.innerText="";
+
+let msg=`🚀 ORDER
+Platform:${selectedPlatform}
+Package:${selectedQuality}
+${document.getElementById("price").innerText}
+Link:${link}`;
+
+window.open(`https://wa.me/256740421134?text=${encodeURIComponent(msg)}`);
+}
+
+/* POPUPS */
 const countries=[
 {code:"+256",flag:"🇺🇬"},
 {code:"+254",flag:"🇰🇪"},
 {code:"+234",flag:"🇳🇬"},
 {code:"+255",flag:"🇹🇿"},
-{code:"+250",flag:"🇷🇼"},
-{code:"+27",flag:"🇿🇦"},
 {code:"+1",flag:"🇺🇸"}
 ];
 
@@ -86,7 +117,6 @@ let amount=Math.floor(Math.random()*9000+1000);
 
 let div=document.createElement("div");
 div.className="popup";
-
 div.innerHTML=`${c.flag} ${c.code} user<br>just bought ${amount} ${s} on ${p}`;
 
 document.getElementById("orderPopup").appendChild(div);
@@ -102,6 +132,12 @@ currency=document.getElementById("currency").value;
 calculatePrice();
 }
 
+/* INIT */
+window.addEventListener("load",()=>{
+updateServiceOptions();
+calculatePrice();
+});
+
 function scrollToOrder(){
 document.getElementById("orderSection").scrollIntoView({behavior:"smooth"});
-}
+  }
