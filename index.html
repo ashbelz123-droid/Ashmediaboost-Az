@@ -12,22 +12,16 @@
 <!-- LOADER -->
 <div id="loader">
   <div class="logo">🚀 AshMedia<span>boost</span></div>
-  <p>Loading...</p>
 </div>
 
-<!-- TOP NAV -->
+<!-- NAV -->
 <div class="top-nav">
-  <div class="logo-nav">🚀 Ashboost</div>
+  <div class="logo-small">🚀 Ashboost</div>
   <button onclick="scrollToOrder()">Order</button>
 </div>
 
-<!-- TOP BAR -->
+<!-- LIVE BAR -->
 <div id="topBar" class="top-bar"></div>
-
-<!-- ANNOUNCEMENT -->
-<div class="announcement">
-🏆 Complete 7 orders this week & WIN rewards 🎁
-</div>
 
 <!-- HERO -->
 <header class="hero">
@@ -37,13 +31,13 @@
 </header>
 
 <!-- JOIN CHANNEL -->
-<section class="join">
+<section class="join glass">
   <p>📢 Join our WhatsApp Channel</p>
-  <a href="https://whatsapp.com/channel/0029VbCSFDCBadmaR5Memh16" target="_blank" class="join-btn">Join Channel</a>
+  <a href="https://whatsapp.com/channel/0029VbCSFDCBadmaR5Memh16" target="_blank" class="join-btn">Join Now</a>
 </section>
 
 <!-- ORDER -->
-<section id="orderSection" class="order">
+<section id="orderSection" class="order glass">
 
 <select id="currency" onchange="changeCurrency()">
 <option value="UGX">UGX</option>
@@ -53,10 +47,27 @@
 </select>
 
 <div class="platforms">
-  <div class="platform-card active" onclick="selectPlatform(this,'instagram')">📸 Instagram</div>
-  <div class="platform-card" onclick="selectPlatform(this,'tiktok')">🎵 TikTok</div>
-  <div class="platform-card" onclick="selectPlatform(this,'facebook')">📘 Facebook</div>
-  <div class="platform-card" onclick="selectPlatform(this,'youtube')">▶️ YouTube</div>
+
+<div class="platform-card active" onclick="selectPlatform(this,'instagram')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+<p>Instagram</p>
+</div>
+
+<div class="platform-card" onclick="selectPlatform(this,'tiktok')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/09/TikTok_logo.svg">
+<p>TikTok</p>
+</div>
+
+<div class="platform-card" onclick="selectPlatform(this,'facebook')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
+<p>Facebook</p>
+</div>
+
+<div class="platform-card" onclick="selectPlatform(this,'youtube')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg">
+<p>YouTube</p>
+</div>
+
 </div>
 
 <select id="type" onchange="updateServiceOptions()">
@@ -69,16 +80,16 @@
 <div id="serviceOptions"></div>
 
 <input id="link" placeholder="Paste link">
-<input id="quantity" type="number" placeholder="Quantity">
+<input id="quantity" type="number" placeholder="Quantity" oninput="calculatePrice()">
 
-<p id="price">Total: 0</p>
+<p id="price">💰 Total: 0</p>
 
 <button onclick="confirmOrder()">🔥 Order via WhatsApp</button>
 
 </section>
 
-<!-- REFER -->
-<div class="refer-box">
+<!-- REF -->
+<div class="refer-box glass">
 <h3>🎁 Refer & Earn</h3>
 <p id="refCode"></p>
 <button onclick="shareReferral()">Share</button>
