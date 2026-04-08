@@ -5,7 +5,10 @@ font-family:sans-serif;
 margin:0;
 padding-top:60px;
 padding-bottom:70px;
+-webkit-tap-highlight-color: transparent;
 }
+
+html{scroll-behavior:smooth;}
 
 /* LOADER */
 #loader{
@@ -21,17 +24,9 @@ z-index:9999;
 transition:opacity 0.5s;
 }
 
-.rocket{
-font-size:50px;
-}
-
-.launch{
-animation:launch 1s forwards;
-}
-
-@keyframes launch{
-100%{transform:translateY(-200px);opacity:0;}
-}
+.rocket{font-size:50px;}
+.launch{animation:launch 1s forwards;}
+@keyframes launch{100%{transform:translateY(-200px);opacity:0;}}
 
 /* FIRE */
 .flame{
@@ -45,11 +40,7 @@ background:orange;
 border-radius:50%;
 animation:flame 0.2s infinite alternate;
 }
-
-@keyframes flame{
-from{height:20px;}
-to{height:30px;background:red;}
-}
+@keyframes flame{to{height:30px;background:red;}}
 
 /* PARTICLES */
 #particles{position:absolute;width:100%;height:100%;}
@@ -60,10 +51,7 @@ background:#38bdf8;
 border-radius:50%;
 animation:explode 1s forwards;
 }
-
-@keyframes explode{
-to{transform:translate(var(--x),var(--y));opacity:0;}
-}
+@keyframes explode{to{transform:translate(var(--x),var(--y));opacity:0;}}
 
 /* SHAKE */
 body.shake{animation:shake 0.4s;}
@@ -78,31 +66,38 @@ body.shake{animation:shake 0.4s;}
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(10px);
 border-radius:15px;
-margin:10px;
-padding:15px;
+margin:12px;
+padding:16px;
 }
 
 .platforms{
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
 }
 
 .platform-card{
-padding:15px;
-text-align:center;
-border-radius:12px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:18px;
+border-radius:14px;
 background:rgba(255,255,255,0.05);
 }
 
-.platform-card.active{transform:scale(1.05);}
+.platform-card:active{transform:scale(0.96);}
+.platform-card img{
+width:26px;height:26px;margin-bottom:6px;
+}
 
 input,select,button{
 width:100%;
-margin-top:10px;
-padding:12px;
-border-radius:10px;
+margin-top:12px;
+padding:14px;
+border-radius:12px;
 border:none;
+font-size:16px;
 }
 
 button{background:#38bdf8;color:white;}
@@ -112,8 +107,8 @@ position:fixed;
 width:100%;
 display:flex;
 justify-content:space-around;
-background:#000;
-padding:10px;
+background:#020617;
+padding:12px;
 }
 
 .top-nav{top:0;}
