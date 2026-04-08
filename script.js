@@ -1,42 +1,33 @@
-const topBar=document.getElementById("topBar");
-const liveUsers=document.getElementById("liveUsers");
 const price=document.getElementById("price");
-
-setTimeout(()=>loader.style.display="none",2200);
 
 let selectedPlatform="instagram";
 let selectedQuality="organic";
 let currency="UGX";
 
-const basePrices={
-instagram:{
-followers:{starter:8000,organic:15000,premium:30000},
-likes:{starter:3000,organic:6000,premium:12000},
-views:{starter:2000,organic:4000,premium:8000}
-},
-tiktok:{
-followers:{starter:7000,organic:13000,premium:28000},
-likes:{starter:2500,organic:5000,premium:10000},
-views:{starter:1500,organic:3000,premium:7000}
-},
-facebook:{
-followers:{starter:7000,organic:12000,premium:25000},
-likes:{starter:3000,organic:6000,premium:12000}
-},
-youtube:{
-views:{starter:5000,organic:10000,premium:20000},
-likes:{starter:4000,organic:8000,premium:15000},
-subscribers:{starter:15000,organic:25000,premium:40000}
-}
+/* MULTIPLIERS */
+const multipliers={
+UGX:1,
+KES:0.05,TZS:0.0025,RWF:0.015,BIF:0.003,
+NGN:0.25,ZAR:0.012,GHS:0.02,EGP:0.016,
+USD:0.001,EUR:0.0009,GBP:0.0008
 };
 
+/* BASE PRICES */
+const basePrices={
+instagram:{followers:{starter:8000,organic:15000,premium:30000}},
+tiktok:{followers:{starter:7000,organic:13000,premium:28000}},
+facebook:{followers:{starter:7000,organic:12000,premium:25000}},
+youtube:{subscribers:{starter:15000,organic:25000,premium:40000}}
+};
+
+/* PLATFORM */
 function selectPlatform(el,p){
 document.querySelectorAll(".platform-card").forEach(e=>e.classList.remove("active"));
 el.classList.add("active");
 selectedPlatform=p;
-calculatePrice();
 }
 
+/* OPTIONS */
 function updateServiceOptions(){
 let type=document.getElementById("type").value;
 let box=document.getElementById("serviceOptions");
@@ -48,31 +39,24 @@ return;
 
 box.innerHTML=`
 <div class="option-card" onclick="selectQuality(this,'starter')">⚡ Starter</div>
-
 <div class="option-card" onclick="selectQuality(this,'organic')">
 <div class="badge">⭐ POPULAR</div>🌱 Organic</div>
-
 <div class="option-card" onclick="selectQuality(this,'premium')">
 <div class="badge premium-badge">🔥 BEST</div>💎 Premium</div>
 `;
 
 selectedQuality="organic";
-calculatePrice();
 }
 
+/* QUALITY */
 function selectQuality(el,q){
 document.querySelectorAll(".option-card").forEach(e=>e.classList.remove("active"));
 el.classList.add("active");
-
 selectedQuality=q;
 calculatePrice();
-
-let fx=document.createElement("div");
-fx.className="sparkle";
-el.appendChild(fx);
-setTimeout(()=>fx.remove(),500);
 }
 
+/* PRICE */
 function calculatePrice(){
 let type=document.getElementById("type").value;
 let qty=document.getElementById("quantity").value;
@@ -86,20 +70,49 @@ let base=basePrices[selectedPlatform]?.[type]?.[selectedQuality];
 if(!base)return;
 
 let total=(qty/1000)*base;
-price.innerText=`💰 ${Math.round(total)} ${currency}`;
+let final=total*multipliers[currency];
+
+price.innerText=`💰 ${Math.round(final)} ${currency}`;
 }
 
+/* CHANGE CURRENCY */
+function changeCurrency(){
+currency=document.getElementById("currency").value;
+calculatePrice();
+}
+
+/* GEO DETECT */
+async function detectUserCountry(){
+try{
+let res=await fetch("https://ipapi.co/json/");
+let data=await res.json();
+
+const map={
+UG:"UGX",KE:"KES",TZ:"TZS",RW:"RWF",BI:"BIF",
+NG:"NGN",ZA:"ZAR",GH:"GHS",EG:"EGP",
+US:"USD",GB:"GBP",FR:"EUR",DE:"EUR"
+};
+
+let c=map[data.country]||"USD";
+currency=c;
+document.getElementById("currency").value=c;
+
+calculatePrice();
+
+}catch{}
+}
+detectUserCountry();
+
+/* LINK VALIDATION */
 function isValidLink(link){
-return link.startsWith("http://")||link.startsWith("https://");
+return link.startsWith("http");
 }
 
+/* ORDER */
 function confirmOrder(){
 let type=document.getElementById("type").value;
 let link=document.getElementById("link").value;
 let qty=document.getElementById("quantity").value;
-let error=document.getElementById("linkError");
-
-error.innerText="";
 
 if(!type||!link||!qty){
 alert("Fill all fields");
@@ -107,7 +120,7 @@ return;
 }
 
 if(!isValidLink(link)){
-error.innerText="❌ Enter valid link (https://)";
+document.getElementById("linkError").innerText="Invalid link";
 return;
 }
 
@@ -122,47 +135,23 @@ Link:${link}`;
 window.open(`https://wa.me/256740421134?text=${encodeURIComponent(msg)}`);
 }
 
-/* LIVE USERS */
-setInterval(()=>{
-liveUsers.innerText=`👥 ${Math.floor(Math.random()*30)+20} users online`;
-},4000);
+/* REF */
+let ref=localStorage.getItem("ref")||("ASH"+Math.floor(Math.random()*999999));
+localStorage.setItem("ref",ref);
+document.getElementById("refCode").innerText=ref;
 
-/* FAKE ORDERS */
-let nums=["+256***78","+254***21","+234***44","+27***55"];
-setInterval(()=>{
-topBar.innerText=`📲 ${nums[Math.floor(Math.random()*nums.length)]} ordered`;
-},5000);
-
-/* REF (FIXED) */
-let savedRef=localStorage.getItem("refCode");
-if(!savedRef){
-savedRef="ASH"+Math.floor(Math.random()*999999);
-localStorage.setItem("refCode",savedRef);
-}
-document.getElementById("refCode").innerText=savedRef;
-
-/* SHARE FIXED */
 function shareReferral(){
-let ref=savedRef;
 let link="https://ashmediaboost-az.vercel.app/?ref="+ref;
-
-let msg=`🚀 Join Âshmēdìãßòøst!
-
-🔥 Grow fast
-💎 Real engagement
-🎁 Earn rewards
-
-Referral Code: ${ref}
-
-🔗 ${link}`;
-
+let msg=`Join Ashmediaboost 🚀 ${link}`;
 window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
 }
 
+/* SCROLL */
 function scrollToOrder(){
 orderSection.scrollIntoView({behavior:"smooth"});
 }
 
+/* WHATSAPP */
 function openWhatsApp(){
 window.open("https://wa.me/256740421134");
-                     }
+}
