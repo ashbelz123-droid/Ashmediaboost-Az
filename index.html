@@ -9,37 +9,31 @@
 
 <body>
 
-<!-- 🚀 LOADER -->
+<!-- LOADER -->
 <div id="loader">
-  <div class="rocket-wrapper">
-    <div class="rocket" id="rocket">🚀</div>
-    <div class="flame"></div>
-  </div>
-  <div id="particles"></div>
-  <h1 id="brandName">Âshmēdìãßòøst</h1>
+  <div class="rocket" id="rocket">🚀</div>
+  <h1>Âshmēdìãßòøst</h1>
 </div>
-
-<audio id="blastSound" src="https://assets.mixkit.co/sfx/preview/mixkit-rocket-launch-1680.mp3"></audio>
 
 <!-- NAV -->
 <div class="top-nav">
-  <div class="logo">🚀 Âshmēdìãßòøst</div>
+  <div>🚀 Âshmēdìãßòøst</div>
 </div>
 
 <!-- HERO -->
 <header class="hero">
-  <h1>🚀 Grow Fast with Âshmēdìãßòøst</h1>
-  <button onclick="scrollToOrder()">🔥 Start Growth</button>
+  <h1>Grow Fast 🚀</h1>
+  <button onclick="scrollToOrder()">Start</button>
 </header>
 
 <!-- JOIN -->
 <section class="glass join-box">
   <div class="join-content">
     <div>
-      <p class="join-title">📢 Join WhatsApp Channel</p>
-      <p class="join-sub">Get offers & updates</p>
+      <b>Join WhatsApp</b>
+      <p>Get updates & offers</p>
     </div>
-    <a href="https://whatsapp.com/channel/0029VbCSFDCBadmaR5Memh16" class="join-btn">Join Now →</a>
+    <a href="https://whatsapp.com/channel/0029VbCSFDCBadmaR5Memh16" class="join-btn">Join →</a>
   </div>
 </section>
 
@@ -47,27 +41,33 @@
 <section id="orderSection" class="glass">
 
 <select id="currency" onchange="changeCurrency()">
-<option value="UGX">🇺🇬 UGX</option>
-<option value="KES">🇰🇪 KES</option>
-<option value="NGN">🇳🇬 NGN</option>
-<option value="USD">🇺🇸 USD</option>
+<option value="UGX">UGX</option>
+<option value="KES">KES</option>
+<option value="NGN">NGN</option>
+<option value="USD">USD</option>
 </select>
 
 <div class="platforms">
   <div class="platform-card active" onclick="selectPlatform(this,'instagram')">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-    <p>Instagram</p>
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"><p>Instagram</p>
   </div>
-
   <div class="platform-card" onclick="selectPlatform(this,'tiktok')">
-    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
-    <p>TikTok</p>
+    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"><p>TikTok</p>
+  </div>
+  <div class="platform-card" onclick="selectPlatform(this,'facebook')">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"><p>Facebook</p>
+  </div>
+  <div class="platform-card" onclick="selectPlatform(this,'youtube')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"><p>YouTube</p>
   </div>
 </div>
 
 <select id="type" onchange="updateServiceOptions();calculatePrice()">
 <option value="">Select Service</option>
 <option value="followers">Followers</option>
+<option value="likes">Likes</option>
+<option value="views">Views</option>
+<option value="subscribers">Subscribers</option>
 </select>
 
 <div id="serviceOptions"></div>
@@ -79,7 +79,7 @@
 
 <p id="price">💰 Total: 0</p>
 
-<button onclick="confirmOrder()">🔥 Order via WhatsApp</button>
+<button onclick="confirmOrder()">Order via WhatsApp</button>
 
 </section>
 
@@ -88,4 +88,4 @@
 
 <script src="script.js"></script>
 </body>
-  </html>
+</html>
