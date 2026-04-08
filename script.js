@@ -2,9 +2,7 @@ const topBar=document.getElementById("topBar");
 const liveUsers=document.getElementById("liveUsers");
 const price=document.getElementById("price");
 
-setTimeout(()=>{
-loader.style.display="none";
-},2200);
+setTimeout(()=>loader.style.display="none",2200);
 
 let selectedPlatform="instagram";
 let selectedQuality="organic";
@@ -14,17 +12,17 @@ const rates={UGX:1,KES:0.035,NGN:0.2,USD:0.00027};
 
 const basePrices={
 instagram:{
-followers:{starter:8000,organic:12000,premium:25000},
+followers:{starter:8000,organic:15000,premium:30000},
 likes:{starter:3000,organic:6000,premium:12000},
 views:{starter:2000,organic:4000,premium:8000}
 },
 tiktok:{
-followers:{starter:7000,organic:10000,premium:22000},
+followers:{starter:7000,organic:13000,premium:28000},
 likes:{starter:2500,organic:5000,premium:10000},
 views:{starter:1500,organic:3000,premium:7000}
 },
 facebook:{
-followers:{starter:7000,organic:9000,premium:18000},
+followers:{starter:7000,organic:12000,premium:25000},
 likes:{starter:3000,organic:6000,premium:12000}
 },
 youtube:{
@@ -52,13 +50,16 @@ return;
 
 box.innerHTML=`
 <div class="option-card" onclick="selectQuality(this,'starter')">⚡ Starter</div>
+
 <div class="option-card" onclick="selectQuality(this,'organic')">
 <div class="badge">⭐ POPULAR</div>🌱 Organic</div>
+
 <div class="option-card" onclick="selectQuality(this,'premium')">
 <div class="badge premium-badge">🔥 BEST</div>💎 Premium</div>
 `;
 
 selectedQuality="organic";
+calculatePrice();
 }
 
 function selectQuality(el,q){
@@ -90,10 +91,27 @@ let total=(qty/1000)*base;
 price.innerText=`💰 ${Math.round(total)} ${currency}`;
 }
 
+function isValidLink(link){
+return link.startsWith("http://")||link.startsWith("https://");
+}
+
 function confirmOrder(){
 let type=document.getElementById("type").value;
 let link=document.getElementById("link").value;
 let qty=document.getElementById("quantity").value;
+let error=document.getElementById("linkError");
+
+error.innerText="";
+
+if(!type||!link||!qty){
+alert("Fill all fields");
+return;
+}
+
+if(!isValidLink(link)){
+error.innerText="❌ Enter valid link (https://)";
+return;
+}
 
 let msg=`🚀 ORDER
 Platform:${selectedPlatform}
@@ -112,7 +130,7 @@ liveUsers.innerText=`👥 ${Math.floor(Math.random()*30)+20} users online`;
 },4000);
 
 /* FAKE ORDERS */
-let nums=["+256***78","+254***21","+234***44"];
+let nums=["+256***78","+254***21","+234***44","+27***55"];
 setInterval(()=>{
 topBar.innerText=`📲 ${nums[Math.floor(Math.random()*nums.length)]} ordered`;
 },5000);
