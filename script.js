@@ -2,11 +2,32 @@ let currency="UGX";
 let selectedPlatform="instagram";
 let selectedQuality="organic";
 
-const basePrices={
-instagram:{followers:{starter:8000,organic:15000,premium:30000}},
-tiktok:{followers:{starter:7000,organic:13000,premium:28000}},
-facebook:{followers:{starter:7000,organic:12000,premium:25000}},
-youtube:{subscribers:{starter:15000,organic:25000,premium:40000}}
+const basePrices = {
+
+instagram:{
+followers:{starter:8000,organic:15000,premium:30000},
+likes:{starter:4000,organic:7000,premium:12000},
+views:{starter:2000,organic:4000,premium:8000}
+},
+
+tiktok:{
+followers:{starter:7000,organic:13000,premium:28000},
+likes:{starter:3000,organic:6000,premium:11000},
+views:{starter:1500,organic:3500,premium:7000}
+},
+
+facebook:{
+followers:{starter:7000,organic:12000,premium:25000},
+likes:{starter:3000,organic:5000,premium:9000},
+views:{starter:2000,organic:4000,premium:8000}
+},
+
+youtube:{
+subscribers:{starter:15000,organic:25000,premium:40000},
+views:{starter:3000,organic:6000,premium:10000},
+likes:{starter:4000,organic:7000,premium:12000}
+}
+
 };
 
 const multipliers={UGX:1,KES:0.05,NGN:0.25,USD:0.001};
