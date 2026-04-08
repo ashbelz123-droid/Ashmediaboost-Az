@@ -17,7 +17,6 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 z-index:9999;
-transition:0.5s;
 }
 
 /* UI */
@@ -39,8 +38,20 @@ text-align:center;
 padding:15px;
 background:rgba(255,255,255,0.05);
 border-radius:10px;
+transition:0.2s;
 }
+
 .platform-card img{width:26px;}
+
+.platform-card.active{
+border:2px solid #38bdf8;
+box-shadow:0 0 12px rgba(56,189,248,0.6);
+}
+
+.platform-card:active{
+transform:scale(0.95);
+box-shadow:0 0 20px rgba(56,189,248,0.8);
+}
 
 input,select,button{
 width:100%;
@@ -50,22 +61,43 @@ border-radius:10px;
 border:none;
 }
 
-button{background:#38bdf8;color:white;}
+button{
+background:#38bdf8;
+color:white;
+transition:0.2s;
+}
 
+button:active{
+transform:scale(0.96);
+box-shadow:0 0 12px rgba(56,189,248,0.8);
+}
+
+/* OPTIONS */
 .option-card{
 padding:12px;
 margin-top:8px;
 background:rgba(255,255,255,0.08);
 border-radius:10px;
 text-align:center;
+transition:0.2s;
 }
-.option-card.active{border:2px solid #38bdf8;}
 
+.option-card.active{
+border:2px solid #38bdf8;
+}
+
+.option-card:active{
+transform:scale(0.96);
+box-shadow:0 0 15px rgba(56,189,248,0.7);
+}
+
+/* JOIN */
 .join-content{
 display:flex;
 justify-content:space-between;
 align-items:center;
 }
+
 .join-btn{
 background:#25D366;
 padding:10px;
@@ -74,7 +106,7 @@ color:white;
 text-decoration:none;
 }
 
-/* POPUP TOP */
+/* POPUP */
 #orderPopup{
 position:fixed;
 top:80px;
@@ -88,10 +120,10 @@ backdrop-filter:blur(12px);
 padding:12px;
 border-radius:12px;
 margin-top:10px;
-animation:slideDown 0.5s;
+animation:slideDown 0.4s;
 }
 
 @keyframes slideDown{
 from{opacity:0;transform:translate(-50%,-20px);}
 to{opacity:1;transform:translate(-50%,0);}
-  }
+                }
