@@ -1,3 +1,6 @@
+const topBar=document.getElementById("topBar");
+const liveUsers=document.getElementById("liveUsers");
+
 setTimeout(()=>loader.style.display="none",1200);
 
 let selectedPlatform="instagram";
@@ -7,10 +10,25 @@ let currency="UGX";
 const rates={UGX:1,KES:0.035,NGN:0.2,USD:0.00027};
 
 const basePrices={
-instagram:{followers:{starter:8000,organic:12000,premium:25000}},
-tiktok:{followers:{starter:7000,organic:10000,premium:22000}},
-facebook:{followers:{starter:7000,organic:9000,premium:18000}},
-youtube:{followers:{starter:10000,organic:18000,premium:35000}}
+instagram:{
+followers:{starter:8000,organic:12000,premium:25000},
+likes:{starter:3000,organic:6000,premium:12000},
+views:{starter:2000,organic:4000,premium:8000}
+},
+tiktok:{
+followers:{starter:7000,organic:10000,premium:22000},
+likes:{starter:2500,organic:5000,premium:10000},
+views:{starter:1500,organic:3000,premium:7000}
+},
+facebook:{
+followers:{starter:7000,organic:9000,premium:18000},
+likes:{starter:3000,organic:6000,premium:12000}
+},
+youtube:{
+views:{starter:5000,organic:10000,premium:20000},
+likes:{starter:4000,organic:8000,premium:15000},
+subscribers:{starter:15000,organic:25000,premium:40000}
+}
 };
 
 function selectPlatform(el,p){
@@ -21,11 +39,17 @@ calculatePrice();
 }
 
 function updateServiceOptions(){
+let type=document.getElementById("type").value;
 let box=document.getElementById("serviceOptions");
+
+if(!basePrices[selectedPlatform][type]){
+box.innerHTML="<p>Not available</p>";
+return;
+}
 
 box.innerHTML=`
 <div class="option-card" onclick="selectQuality('starter')">⚡ Starter Boost</div>
-<div class="option-card" onclick="selectQuality('organic')">🌱 Organic Lift ⭐</div>
+<div class="option-card" onclick="selectQuality('organic')">🌱 Organic Growth ⭐</div>
 <div class="option-card" onclick="selectQuality('premium')">💎 Premium Combo</div>
 `;
 }
@@ -39,13 +63,21 @@ function calculatePrice(){
 let type=document.getElementById("type").value;
 let qty=document.getElementById("quantity").value;
 
+if(!type||!qty){
+price.innerText="💰 Total: 0";
+return;
+}
+
 let base=basePrices[selectedPlatform]?.[type]?.[selectedQuality];
-if(!base||!qty)return;
+if(!base){
+price.innerText="Service not available";
+return;
+}
 
 let total=(qty/1000)*base;
 let converted=total*rates[currency];
 
-document.getElementById("price").innerText="💰 "+Math.round(converted)+" "+currency;
+price.innerText=`💰 ${Math.round(converted)} ${currency}`;
 }
 
 function changeCurrency(){
@@ -54,16 +86,24 @@ calculatePrice();
 }
 
 function confirmOrder(){
+let type=document.getElementById("type").value;
 let link=document.getElementById("link").value;
 let qty=document.getElementById("quantity").value;
-let price=document.getElementById("price").innerText;
 
-let msg=`🔥 ORDER
+if(!type||!link||!qty){
+alert("Fill all fields");
+return;
+}
+
+let msg=`🚀 NEW ORDER
 
 Platform:${selectedPlatform}
-Qty:${qty}
-${price}
+Service:${type}
+Package:${selectedQuality}
+
 Link:${link}
+Qty:${qty}
+${price.innerText}
 
 Join Channel:
 https://whatsapp.com/channel/0029VbCSFDCBadmaR5Memh16`;
@@ -88,14 +128,14 @@ liveUsers.innerText=`👥 ${n} users online`;
 /* FAKE ORDERS */
 let nums=["+256***78","+254***21","+234***44","+27***55"];
 setInterval(()=>{
-topBar.innerText=`📲 ${nums[Math.floor(Math.random()*nums.length)]} just placed an order`;
+topBar.innerText=`📲 ${nums[Math.floor(Math.random()*nums.length)]} just ordered`;
 },5000);
 
 /* REF */
 let ref="ASH"+Math.floor(Math.random()*999999);
-document.getElementById("refCode").innerText=ref;
+refCode.innerText=ref;
 
 function shareReferral(){
 let link=location.origin+"?ref="+ref;
 window.open(`https://wa.me/?text=${encodeURIComponent(link)}`);
-                 }
+}
