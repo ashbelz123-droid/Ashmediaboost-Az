@@ -5,27 +5,18 @@ let selectedQuality="organic";
 /* PRICES */
 const basePrices={
 instagram:{followers:{starter:8000,organic:15000,premium:30000}},
-tiktok:{followers:{starter:7000,organic:13000,premium:28000}}
+tiktok:{followers:{starter:7000,organic:13000,premium:28000}},
+facebook:{followers:{starter:7000,organic:12000,premium:25000}},
+youtube:{subscribers:{starter:15000,organic:25000,premium:40000}}
 };
 
 const multipliers={UGX:1,KES:0.05,NGN:0.25,USD:0.001};
 
 /* LOADER FIX */
-window.addEventListener("load", ()=>{
-
-let loader=document.getElementById("loader");
-let rocket=document.getElementById("rocket");
-
-setTimeout(()=>rocket.classList.add("launch"),300);
-
+window.addEventListener("load",()=>{
 setTimeout(()=>{
-loader.style.opacity="0";
-setTimeout(()=>loader.style.display="none",500);
-},1200);
-
-/* fallback */
-setTimeout(()=>loader.style.display="none",3000);
-
+document.getElementById("loader").style.display="none";
+},1500);
 });
 
 /* PRICE */
@@ -34,9 +25,10 @@ let qty=document.getElementById("quantity").value;
 let type=document.getElementById("type").value;
 if(!qty||!type)return;
 
-let base=basePrices[selectedPlatform][type][selectedQuality];
-let total=(qty/1000)*base*multipliers[currency];
+let base=basePrices[selectedPlatform]?.[type]?.[selectedQuality];
+if(!base)return;
 
+let total=(qty/1000)*base*multipliers[currency];
 document.getElementById("price").innerText=`💰 ${Math.round(total)} ${currency}`;
 }
 
@@ -72,14 +64,37 @@ return;
 window.open(`https://wa.me/256740421134?text=${encodeURIComponent(link)}`);
 }
 
-/* POPUP */
-setInterval(()=>{
+/* 🌍 REAL COUNTRY POPUP */
+const countries=[
+{code:"+256",flag:"🇺🇬"},
+{code:"+254",flag:"🇰🇪"},
+{code:"+234",flag:"🇳🇬"},
+{code:"+255",flag:"🇹🇿"},
+{code:"+250",flag:"🇷🇼"},
+{code:"+27",flag:"🇿🇦"},
+{code:"+1",flag:"🇺🇸"}
+];
+
+const platforms=["Instagram","TikTok","Facebook","YouTube"];
+const services=["followers","likes","views"];
+
+function showPopup(){
+let c=countries[Math.floor(Math.random()*countries.length)];
+let p=platforms[Math.floor(Math.random()*platforms.length)];
+let s=services[Math.floor(Math.random()*services.length)];
+let amount=Math.floor(Math.random()*9000+1000);
+
 let div=document.createElement("div");
 div.className="popup";
-div.innerText="+256 user bought followers";
+
+div.innerHTML=`${c.flag} ${c.code} user<br>just bought ${amount} ${s} on ${p}`;
+
 document.getElementById("orderPopup").appendChild(div);
-setTimeout(()=>div.remove(),3000);
-},5000);
+
+setTimeout(()=>div.remove(),4000);
+}
+
+setInterval(showPopup,5000);
 
 /* CURRENCY */
 function changeCurrency(){
@@ -89,4 +104,4 @@ calculatePrice();
 
 function scrollToOrder(){
 document.getElementById("orderSection").scrollIntoView({behavior:"smooth"});
-                               }
+}
