@@ -9,11 +9,17 @@
 
 <body>
 
-<!-- LOADER -->
+<!-- 🚀 LOADER -->
 <div id="loader">
-  <div class="rocket">🚀</div>
+  <div class="rocket-wrapper">
+    <div class="rocket" id="rocket">🚀</div>
+    <div class="flame"></div>
+  </div>
+  <div id="particles"></div>
   <h1 id="brandName">Âshmēdìãßòøst</h1>
 </div>
+
+<audio id="blastSound" src="https://assets.mixkit.co/sfx/preview/mixkit-rocket-launch-1680.mp3"></audio>
 
 <!-- NAV -->
 <div class="top-nav">
@@ -21,7 +27,6 @@
   <button onclick="scrollToOrder()">Order</button>
 </div>
 
-<!-- LIVE BAR -->
 <div id="topBar" class="top-bar"></div>
 
 <!-- HERO -->
@@ -41,49 +46,37 @@
 <section id="orderSection" class="glass">
 
 <select id="currency" onchange="changeCurrency()">
-
 <option value="UGX">🇺🇬 UGX</option>
 <option value="KES">🇰🇪 KES</option>
 <option value="TZS">🇹🇿 TZS</option>
 <option value="RWF">🇷🇼 RWF</option>
 <option value="BIF">🇧🇮 BIF</option>
-
 <option value="NGN">🇳🇬 NGN</option>
 <option value="ZAR">🇿🇦 ZAR</option>
 <option value="GHS">🇬🇭 GHS</option>
 <option value="EGP">🇪🇬 EGP</option>
-
 <option value="USD">🇺🇸 USD</option>
 <option value="EUR">🇪🇺 EUR</option>
 <option value="GBP">🇬🇧 GBP</option>
-
 </select>
 
-<p style="font-size:11px;opacity:0.6;">🌍 Prices adjust by region</p>
-
-<!-- PLATFORMS -->
 <div class="platforms">
-
-<div class="platform-card active" onclick="selectPlatform(this,'instagram')">
-<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-<p>Instagram</p>
-</div>
-
-<div class="platform-card" onclick="selectPlatform(this,'tiktok')">
-<img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
-<p>TikTok</p>
-</div>
-
-<div class="platform-card" onclick="selectPlatform(this,'facebook')">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
-<p>Facebook</p>
-</div>
-
-<div class="platform-card" onclick="selectPlatform(this,'youtube')">
-<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-<p>YouTube</p>
-</div>
-
+  <div class="platform-card active" onclick="selectPlatform(this,'instagram')">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+    <p>Instagram</p>
+  </div>
+  <div class="platform-card" onclick="selectPlatform(this,'tiktok')">
+    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
+    <p>TikTok</p>
+  </div>
+  <div class="platform-card" onclick="selectPlatform(this,'facebook')">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+    <p>Facebook</p>
+  </div>
+  <div class="platform-card" onclick="selectPlatform(this,'youtube')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    <p>YouTube</p>
+  </div>
 </div>
 
 <select id="type" onchange="updateServiceOptions();calculatePrice()">
