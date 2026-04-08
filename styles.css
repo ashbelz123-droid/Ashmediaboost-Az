@@ -7,7 +7,6 @@ body{
   padding-bottom:70px;
 }
 
-/* LOADER */
 #loader{
   position:fixed;
   width:100%;
@@ -38,7 +37,6 @@ body{
   to{opacity:1;}
 }
 
-/* GLASS */
 .glass{
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(10px);
@@ -47,7 +45,6 @@ body{
   padding:15px;
 }
 
-/* NAV */
 .top-nav{
   position:fixed;
   top:0;
@@ -58,7 +55,6 @@ body{
   background:rgba(0,0,0,0.5);
 }
 
-/* PLATFORM */
 .platforms{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -74,11 +70,8 @@ body{
 
 .platform-card img{width:40px;}
 
-.platform-card.active{
-  transform:scale(1.05);
-}
+.platform-card.active{transform:scale(1.05);}
 
-/* OPTIONS */
 .option-card{
   position:relative;
   margin-top:10px;
@@ -92,7 +85,6 @@ body{
   border:2px solid #38bdf8;
 }
 
-/* BADGES */
 .badge{
   position:absolute;
   right:-30px;
@@ -104,7 +96,6 @@ body{
 }
 .premium-badge{background:#f59e0b;}
 
-/* EFFECT */
 .sparkle{
   position:absolute;
   width:100%;
@@ -116,7 +107,6 @@ body{
   to{opacity:0;transform:scale(1.5);}
 }
 
-/* INPUT */
 input,select,button{
   width:100%;
   margin-top:10px;
@@ -135,7 +125,6 @@ button{
   color:white;
 }
 
-/* JOIN */
 .join-btn{
   display:block;
   text-align:center;
@@ -146,7 +135,6 @@ button{
   text-decoration:none;
 }
 
-/* NAV */
 .bottom-nav{
   position:fixed;
   bottom:0;
@@ -164,4 +152,4 @@ button{
   text-align:center;
   font-size:13px;
   color:#38bdf8;
-               }
+  }
