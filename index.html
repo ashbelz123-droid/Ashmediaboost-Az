@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ashmediaboost</title>
+<title>Âshmēdìãßòøst</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<!-- LOADER -->
+<!-- 🚀 LOADER -->
 <div id="loader">
-  <div class="logo">🚀 AshMedia<span>boost</span></div>
+  <div class="rocket">🚀</div>
+  <h1 id="brandName">Âshmēdìãßòøst</h1>
 </div>
 
 <!-- NAV -->
@@ -25,15 +26,15 @@
 
 <!-- HERO -->
 <header class="hero">
-  <div class="logo">🚀 AshMedia<span>boost</span></div>
+  <h1>🚀 Âshmēdìãßòøst</h1>
   <p id="liveUsers"></p>
   <button onclick="scrollToOrder()">🔥 Start Growth</button>
 </header>
 
-<!-- JOIN CHANNEL -->
-<section class="join glass">
-  <p>📢 Join our WhatsApp Channel</p>
-  <a href="https://whatsapp.com/channel/0029VbCSFDCBadmaR5Memh16" target="_blank" class="join-btn">Join Now</a>
+<!-- JOIN -->
+<section class="glass">
+  <p>📢 Join WhatsApp Channel</p>
+  <a href="https://whatsapp.com/channel/0029VbCSFDCBadmaR5Memh16" class="join-btn">Join Now</a>
 </section>
 
 <!-- ORDER -->
@@ -47,27 +48,25 @@
 </select>
 
 <div class="platforms">
+  <div class="platform-card active" onclick="selectPlatform(this,'instagram')">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+    <p>Instagram</p>
+  </div>
 
-<div class="platform-card active" onclick="selectPlatform(this,'instagram')">
-<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-<p>Instagram</p>
-</div>
+  <div class="platform-card" onclick="selectPlatform(this,'tiktok')">
+    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
+    <p>TikTok</p>
+  </div>
 
-<div class="platform-card" onclick="selectPlatform(this,'tiktok')">
-<img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
-<p>TikTok</p>
-</div>
+  <div class="platform-card" onclick="selectPlatform(this,'facebook')">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+    <p>Facebook</p>
+  </div>
 
-<div class="platform-card" onclick="selectPlatform(this,'facebook')">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
-<p>Facebook</p>
-</div>
-
-<div class="platform-card" onclick="selectPlatform(this,'youtube')">
-<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-<p>YouTube</p>
-</div>
-
+  <div class="platform-card" onclick="selectPlatform(this,'youtube')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    <p>YouTube</p>
+  </div>
 </div>
 
 <select id="type" onchange="updateServiceOptions();calculatePrice()">
@@ -90,13 +89,13 @@
 </section>
 
 <!-- REF -->
-<div class="refer-box glass">
+<div class="glass">
 <h3>🎁 Refer & Earn</h3>
 <p id="refCode"></p>
 <button onclick="shareReferral()">Share</button>
 </div>
 
-<!-- BOTTOM NAV -->
+<!-- BOTTOM -->
 <div class="bottom-nav">
 <button onclick="scrollToOrder()">Order</button>
 <button onclick="openWhatsApp()">Chat</button>
@@ -104,4 +103,4 @@
 
 <script src="script.js"></script>
 </body>
-</html>
+  </html>
