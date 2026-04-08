@@ -46,7 +46,7 @@ calculatePrice();
 
 /* PRICE */
 function calculatePrice(){
-let qty=document.getElementById("quantity").value;
+let qty=Number(document.getElementById("quantity").value);
 let type=document.getElementById("type").value;
 
 if(!qty||!type){
@@ -60,8 +60,19 @@ document.getElementById("price").innerText="⚠️ Not available";
 return;
 }
 
-let total=(qty/1000)*base*multipliers[currency];
-document.getElementById("price").innerText=`💰 ${Math.round(total)} ${currency}`;
+let total=(qty/1000)*base;
+total=total*multipliers[currency];
+total=Math.round(total);
+
+let icons={
+followers:"👥",
+likes:"❤️",
+views:"👁",
+subscribers:"▶️"
+};
+
+document.getElementById("price").innerText=
+`💰 ${total.toLocaleString()} ${currency} • ${icons[type]} ${type}`;
 }
 
 /* ORDER VALIDATION */
@@ -95,6 +106,18 @@ ${document.getElementById("price").innerText}
 Link:${link}`;
 
 window.open(`https://wa.me/256740421134?text=${encodeURIComponent(msg)}`);
+}
+
+/* SHARE */
+function shareReferral(){
+let link="https://ashmediaboost.vercel.app";
+
+let msg=`🔥 Grow fast with Âshmēdìãßòøst 🚀
+Followers • Likes • Views
+
+👉 ${link}`;
+
+window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
 }
 
 /* POPUPS */
