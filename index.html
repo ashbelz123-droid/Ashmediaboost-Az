@@ -17,13 +17,13 @@
 
 <!-- NAV -->
 <div class="top-nav">
-  <div>🚀 Âshmēdìãßòøst</div>
+  <div class="logo">🚀 Âshmēdìãßòøst</div>
 </div>
 
 <!-- HERO -->
 <header class="hero">
   <h1>Grow Fast 🚀</h1>
-  <button onclick="scrollToOrder()">Start</button>
+  <button onclick="scrollToOrder()">Start Growth</button>
 </header>
 
 <!-- JOIN -->
@@ -41,10 +41,10 @@
 <section id="orderSection" class="glass">
 
 <select id="currency" onchange="changeCurrency()">
-<option value="UGX">UGX</option>
-<option value="KES">KES</option>
-<option value="NGN">NGN</option>
-<option value="USD">USD</option>
+<option value="UGX">🇺🇬 UGX</option>
+<option value="KES">🇰🇪 KES</option>
+<option value="NGN">🇳🇬 NGN</option>
+<option value="USD">🇺🇸 USD</option>
 </select>
 
 <div class="platforms">
@@ -77,13 +77,13 @@
 
 <input id="quantity" type="number" placeholder="Quantity" oninput="calculatePrice()">
 
-<p id="price">💰 Total: 0</p>
+<p id="price">💰 Total: Select options</p>
 
 <button onclick="confirmOrder()">Order via WhatsApp</button>
 
 </section>
 
-<!-- POPUP -->
+<!-- POPUPS -->
 <div id="orderPopup"></div>
 
 <script src="script.js"></script>
