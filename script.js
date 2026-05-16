@@ -11,9 +11,9 @@ views:{starter:2000,organic:4000,premium:8000}
 },
 
 tiktok:{
-followers:{starter:7000,organic:13000,premium:28000},
-likes:{starter:3000,organic:6000,premium:11000},
-views:{starter:1500,organic:3500,premium:7000}
+followers:{starter:13000,organic:19000,premium:28000},
+likes:{starter:1000,organic:5000,premium:10000},
+views:{starter:900,organic:3500,premium:7000}
 },
 
 facebook:{
